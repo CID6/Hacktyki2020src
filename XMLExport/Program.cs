@@ -4,6 +4,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Linq;
 using System.Xml.Serialization;
+using System.IO;
 
 namespace XMLExport
 {
@@ -13,19 +14,20 @@ namespace XMLExport
         static void Main(string[] args)
         {
 
-            XElement xmlE = XElement.Load(@"C:\Users\Czarek\Desktop\testXml.xml");
-            XDocument xml = XDocument.Load(@"C:\Users\Czarek\Desktop\testXml.xml");
+
+            XDocument xml = XDocument.Load(Resource.XMLTemplate);
 
             //TestCodeFromSO();
             //PrintXMLDocumentNames(xml);
             ProductionReport report = ProductionReport.Deserialize(xml);
             Console.WriteLine("report done");
+
             Serializer serializer = new Serializer();
 
             serializer.SerializeCars(report);
             serializer.SaveToFile(@"C:\Users\Czarek\Desktop\carXml.xml");
 
-            serializer.TransformToCSV(@"C:\Users\Czarek\Desktop\carXml.xml", @"C:\Users\Czarek\Desktop\carCSV.csv", @"C:\Users\Czarek\Desktop\output2.xsl");
+            serializer.TransformToCSV(@"C:\Users\Czarek\Desktop\carXml.xml", @"C:\Users\Czarek\Desktop\carCSV.csv", Resource.XSLFile);
 
             Console.ReadLine();
         }

@@ -126,4 +126,7 @@
   <data name="XSLFile" xml:space="preserve">
     <value>../../../XMLs/output2.xsl</value>
   </data>
+  <data name="XSLFile2" xml:space="preserve">
+    <value>../../../XMLs/output3.xsl</value>
+  </data>
 </root>

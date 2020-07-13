@@ -42,15 +42,19 @@ namespace XMLExport
                 element.SetAttributeValue(attribute.Key, attribute.Value);
             }
 
-            if (deserializedElement.Value != null)
-            {
-                element.Value = deserializedElement.Value; 
-            }
 
-            foreach(var child in deserializedElement.Children)
+            foreach (var child in deserializedElement.Children)
             {
                 element.Add(SerializeElement(child));
             }
+
+            if (deserializedElement.Value != null)
+            {
+                //element.Value = deserializedElement.Value;
+                element.Add(deserializedElement.Value);
+            }
+
+
 
             return element;
         }

@@ -13,9 +13,18 @@ namespace XMLExport
     {
         static void Main(string[] args)
         {
-            Dynamic();
+            Hardcoded();
 
             Console.ReadLine();
+        }
+
+        static void XSL()
+        {
+            XSLConstructor constructor = new XSLConstructor();
+
+            constructor.Save(@"C:\Users\Czarek\Desktop\dynamic.xsl");
+
+
         }
 
         static void Dynamic()
@@ -29,7 +38,7 @@ namespace XMLExport
             Console.WriteLine();
 
             DefaultSerializer serializer = new DefaultSerializer(deserializer.Root);
-            serializer.TurnAttributesIntoChildren();
+            //serializer.TurnAttributesIntoChildren();
             serializer.Serialize("Car");
             serializer.Save(@"C:\Users\Czarek\Desktop\carXml2.xml");
 
@@ -51,7 +60,7 @@ namespace XMLExport
             serializer.SerializeCars(report);
             serializer.SaveToFile(@"C:\Users\Czarek\Desktop\carXml.xml");
 
-            serializer.TransformToCSV(@"C:\Users\Czarek\Desktop\carXml.xml", @"C:\Users\Czarek\Desktop\carCSV.csv", Resource.XSLFile);
+            serializer.TransformToCSV(@"C:\Users\Czarek\Desktop\carXml.xml", @"C:\Users\Czarek\Desktop\carCSV.csv", Resource.XSLFile2);
 
             Console.ReadLine();
         }

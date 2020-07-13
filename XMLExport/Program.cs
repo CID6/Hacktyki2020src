@@ -13,6 +13,13 @@ namespace XMLExport
     {
         static void Main(string[] args)
         {
+            Dynamic();
+
+            Console.ReadLine();
+        }
+
+        static void Dynamic()
+        {
             XDocument xml = XDocument.Load(Resource.XMLTemplate);
 
             DefaultDeserializer deserializer = new DefaultDeserializer(xml);
@@ -21,7 +28,6 @@ namespace XMLExport
 
             Console.WriteLine();
 
-            Console.ReadLine();
         }
 
         static void Hardcoded()

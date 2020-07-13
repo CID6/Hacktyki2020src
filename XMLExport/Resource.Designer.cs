@@ -61,6 +61,15 @@ namespace XMLExport {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu ../../../XMLs/testXML.xml.
+        /// </summary>
+        internal static string TestXML {
+            get {
+                return ResourceManager.GetString("TestXML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu ../../../XMLs/template.xml.
         /// </summary>
         internal static string XMLTemplate {

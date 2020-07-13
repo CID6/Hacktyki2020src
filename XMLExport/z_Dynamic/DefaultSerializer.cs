@@ -15,7 +15,7 @@ namespace XMLExport
             Root = root;
         }
 
-        public void Serialize(string elementName)
+        public XDocument Serialize(string elementName)
         {
             IEnumerable<DeserializedElement> deserializedElements = Find(elementName);
 
@@ -30,6 +30,7 @@ namespace XMLExport
             document.Add(root);
 
             SerializedDocument = document;
+            return SerializedDocument;
         }
 
         public XElement SerializeElement(DeserializedElement deserializedElement)
@@ -68,6 +69,21 @@ namespace XMLExport
             if (SerializedDocument != null)
             {
                 SerializedDocument.Save(path);
+            }
+        }
+
+        public void TurnAttributesIntoChildren()
+        {
+            if(Root != null) TurnAttributesIntoChildren(Root);
+        }
+
+        public void TurnAttributesIntoChildren(DeserializedElement element)
+        {
+            element.TurnAttributesIntoChildren();
+
+            foreach(var child in element.Children)
+            {
+                TurnAttributesIntoChildren(child);
             }
         }
 

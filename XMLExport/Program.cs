@@ -29,7 +29,8 @@ namespace XMLExport
             Console.WriteLine();
 
             DefaultSerializer serializer = new DefaultSerializer(deserializer.Root);
-            serializer.Serialize("Feature");
+            serializer.TurnAttributesIntoChildren();
+            serializer.Serialize("Car");
             serializer.Save(@"C:\Users\Czarek\Desktop\carXml2.xml");
 
 

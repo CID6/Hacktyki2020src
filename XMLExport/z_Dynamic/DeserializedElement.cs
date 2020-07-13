@@ -16,6 +16,14 @@ namespace XMLExport
         public string Value { get; private set; }
         public Dictionary<string, string> Attributes { get; private set; }
 
+        public bool HasSubchildren
+        {
+            get
+            {
+                return (Children.Count != 0);
+            }
+        }
+
         public DeserializedElement(XElement element)
         {
             Element = element;
@@ -24,6 +32,14 @@ namespace XMLExport
             SetAttributes();
             SetValue();
             SetChildren();
+        }
+
+        public DeserializedElement(string name = null, Dictionary<string, string> attributes = null, string value = null, List<DeserializedElement> children = null)
+        {
+            Name = name;
+            Attributes = attributes ?? new Dictionary<string, string>();
+            Value = value;
+            Children = children ?? new List<DeserializedElement>();
         }
 
         private void SetName()
@@ -56,6 +72,16 @@ namespace XMLExport
             {
                 Children.Add(new DeserializedElement(childElement));
             }
+        }
+
+        public void TurnAttributesIntoChildren()
+        {
+            foreach(var attribute in Attributes)
+            {
+                Children.Add(new DeserializedElement(name: attribute.Key, value: attribute.Value));
+            }
+
+            Attributes.Clear();
         }
 
         private string NormalizeAttributeValue(string attributeValue)

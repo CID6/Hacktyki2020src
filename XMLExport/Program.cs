@@ -13,8 +13,19 @@ namespace XMLExport
     {
         static void Main(string[] args)
         {
+            XDocument xml = XDocument.Load(Resource.XMLTemplate);
+
+            DefaultDeserializer deserializer = new DefaultDeserializer(xml);
+            deserializer.Deserialize();
 
 
+            Console.WriteLine();
+
+            Console.ReadLine();
+        }
+
+        static void Hardcoded()
+        {
             XDocument xml = XDocument.Load(Resource.XMLTemplate);
 
             //TestCodeFromSO();

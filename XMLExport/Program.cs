@@ -28,6 +28,12 @@ namespace XMLExport
 
             Console.WriteLine();
 
+            DefaultSerializer serializer = new DefaultSerializer(deserializer.Root);
+            serializer.Serialize("Feature");
+            serializer.Save(@"C:\Users\Czarek\Desktop\carXml2.xml");
+
+
+            Console.ReadLine();
         }
 
         static void Hardcoded()

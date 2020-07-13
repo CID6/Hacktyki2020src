@@ -36,7 +36,7 @@ namespace XMLExport
             Attributes = new Dictionary<string, string>();
             foreach (XAttribute attribute in Element.Attributes())
             {
-                Attributes.Add(attribute.Name.LocalName, attribute.Value);
+                Attributes.Add(attribute.Name.LocalName, NormalizeAttributeValue(attribute.Value));
             }
         }
 
@@ -56,6 +56,15 @@ namespace XMLExport
             {
                 Children.Add(new DeserializedElement(childElement));
             }
+        }
+
+        private string NormalizeAttributeValue(string attributeValue)
+        {
+            string returnString = attributeValue.Replace("\n", "");
+            returnString = returnString.Replace("\r", "");
+            returnString = returnString.Replace("\t", "");
+
+            return returnString;
         }
     }
 }

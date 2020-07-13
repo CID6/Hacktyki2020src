@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace XMLExportTests
 {
     [TestClass]
-    public class DefaultDeserializeTests
+    public class DefaultDeserializerTests
     {
         private const string testXMLPath = @"C://Users/Czarek/Desktop/testXML.xml";
 
@@ -49,6 +49,24 @@ namespace XMLExportTests
             DeserializedElement root = testDeserializer.Root;
 
             Assert.AreEqual(root.Value, "RootTextValue");
+        }
+    }
+
+    [TestClass]
+    public class DefaultSerializerTests
+    {
+        private const string testXMLPath = @"C://Users/Czarek/Desktop/testXML.xml";
+
+        [TestMethod]
+        public void FindTest()
+        {
+            XDocument document = XDocument.Load(testXMLPath);
+            DefaultDeserializer testDeserializer = new DefaultDeserializer(document);
+            testDeserializer.Deserialize();
+
+            DefaultSerializer serializer = new DefaultSerializer(testDeserializer.Root);
+
+            Assert.AreEqual("VVVVVV", serializer.Find("ElementAsValue").First().Value);
         }
     }
 }

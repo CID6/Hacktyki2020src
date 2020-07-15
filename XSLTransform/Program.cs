@@ -13,13 +13,12 @@ namespace XSLTransform
         //
         static int Main(string[] args)
         {
-
+            //are there enough arguments?
             int retArgs = CheckArgsValidity(args);
             if (retArgs != 0) return retArgs;
 
-
-            //if (CheckPathValidity(args) == 1) return 3;
-
+            //im not checking path validity, the application throws an exception if thats the case later.
+        
             string inputPath = args[0];
             string xslPath = args[1];
             string outputPath = null;
@@ -32,26 +31,11 @@ namespace XSLTransform
 
             if(args.Length >= 3 && args[2]!="-c")
             {
-                if (!File.Exists(args[2]))
-                {
-                    outputPath = args[2];
-                }
-                else
-                {
-                    FileAttributes attributes = File.GetAttributes(args[2]);
-                    if ((attributes & FileAttributes.Directory) == FileAttributes.Directory)
-                    {
-                        string filename = Path.ChangeExtension(inputPath, "csv");
-                        filename = Path.GetFileName(filename);
-
-                        outputPath = Path.Join(args[2], filename);
-
-                    }
-                    else outputPath = args[2]; 
-                }
+                PrepareOutputhPath(inputPath, args[2]);
             }
 
-            Console.WriteLine("output path: " + outputPath);
+            Console.WriteLine("File will be saved to: " + outputPath);
+
             try
             {
                 TransformToCSV(inputPath, outputPath, xslPath);
@@ -62,10 +46,6 @@ namespace XSLTransform
                 return 10;
             }
 
-            Console.WriteLine("Hello World!");
-
-            Console.ReadLine();
-
             return 0;
         }
 
@@ -74,34 +54,15 @@ namespace XSLTransform
             if (args.Length == 0)
             {
                 Console.WriteLine("Please enter the input file path.");
-                Console.WriteLine("Usage: program input_path xsl_path [output_path] [-c :columns_to_convert:]");
+                Console.WriteLine("Usage: program input_path xsl_path [output_path]");
                 return 1;
             }
 
             if (args.Length == 1)
             {
                 Console.WriteLine("Please enter the XSLT file path.");
-                Console.WriteLine("Usage: program input_path xsl_path [output_path] [-c :columns_to_convert:]");
+                Console.WriteLine("Usage: program input_path xsl_path [output_path]");
                 return 2;
-            }
-
-            return 0;
-        }
-
-        static int CheckPathValidity(string[] args)
-        {
-            if(!(Uri.IsWellFormedUriString(args[0], UriKind.RelativeOrAbsolute)))
-            {
-                Console.WriteLine("Incorrect input file path.");
-                Console.WriteLine("Usage: program input_path xsl_path [output_path] [-c :columns_to_convert:]");
-                return 1;
-            }
-
-            if (!(Uri.IsWellFormedUriString(args[1], UriKind.RelativeOrAbsolute)))
-            {
-                Console.WriteLine("Incorrect XSLT file path.");
-                Console.WriteLine("Usage: program input_path xsl_path [output_path] [-c :columns_to_convert:]");
-                return 1;
             }
 
             return 0;
@@ -121,5 +82,31 @@ namespace XSLTransform
             xslt.Transform(inputXMLpath, outputCSVpath);
 
         }
+
+        private static string PrepareOutputhPath(string inputPath, string outputPath)
+        {
+            string returnPath;
+            if (!File.Exists(outputPath))
+            {
+                returnPath = outputPath;
+            }
+            else
+            {
+                FileAttributes attributes = File.GetAttributes(outputPath);
+                if ((attributes & FileAttributes.Directory) == FileAttributes.Directory)
+                {
+                    string filename = Path.ChangeExtension(inputPath, "csv");
+                    filename = Path.GetFileName(filename);
+
+                    returnPath = Path.Join(outputPath, filename);
+
+                }
+                else returnPath = outputPath;
+            }
+
+            return returnPath;
+        }
+
+        
     }
 }

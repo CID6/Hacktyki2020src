@@ -1,44 +1,47 @@
 ﻿using System;
 using System.IO;
-using System.Xml;
-using System.Xml.Xsl;
+using System.Xml.Linq;
 
-namespace XSLTransform
+namespace XMLExportH
 {
     class Program
     {
-        //0 - xml path
-        //1 - xsl path
-        //2 - ouput path, optional
-        //
+        //0 - input path
+        //1 - outputPath
         static int Main(string[] args)
         {
-            //are there enough arguments?
             int retArgs = CheckArgsValidity(args);
             if (retArgs != 0) return retArgs;
 
-            //im not checking path validity, the application throws an exception if thats the case later.
-        
             string inputPath = args[0];
-            string xslPath = args[1];
             string outputPath = null;
 
-            if(args.Length == 2)
+            if (args.Length == 1)
             {
                 Console.WriteLine("Output path was not given. Output .csv file will be saved in input file's directory.");
-                outputPath = Path.ChangeExtension(inputPath, "csv");
+
+                outputPath = CreateDefaultOutputPath(inputPath);
             }
 
-            if(args.Length >= 3 && args[2]!="-c")
+            if (args.Length >= 2)
             {
-                outputPath = PrepareOutputhPath(inputPath, args[2]);
+                try
+                {
+                    outputPath = PrepareOutputhPath(inputPath, args[1]);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return 99;
+                }
             }
 
             Console.WriteLine("File will be saved to: " + outputPath);
 
+
             try
             {
-                TransformToCSV(inputPath, outputPath, xslPath);
+                TransposeXML(inputPath, outputPath);
             }
             catch (Exception e)
             {
@@ -54,33 +57,23 @@ namespace XSLTransform
             if (args.Length == 0)
             {
                 Console.WriteLine("Please enter the input file path.");
-                Console.WriteLine("Usage: program input_path xsl_path [output_path]");
+                Console.WriteLine("Usage: program input_path [output_path]");
                 return 1;
-            }
-
-            if (args.Length == 1)
-            {
-                Console.WriteLine("Please enter the XSLT file path.");
-                Console.WriteLine("Usage: program input_path xsl_path [output_path]");
-                return 2;
             }
 
             return 0;
         }
 
-        private static void TransformToCSV(string inputXMLpath, string outputCSVpath, string xslPath)
+        static string CreateDefaultOutputPath(string inputPath)
         {
+            string outputPath;
 
-            XsltSettings settings = new XsltSettings(true, true);
-            settings.EnableScript = true;
-            settings.EnableDocumentFunction = true;
+            string filename = Path.GetFileNameWithoutExtension(inputPath) + "_output";
+            string directory = Path.GetDirectoryName(inputPath);
+            outputPath = Path.Combine(directory, filename);
+            outputPath = Path.ChangeExtension(outputPath, "xml");
 
-            XslCompiledTransform xslt = new XslCompiledTransform();
-
-            xslt.Load(xslPath, settings, new XmlUrlResolver());
-
-            xslt.Transform(inputXMLpath, outputCSVpath);
-
+            return outputPath;
         }
 
         private static string PrepareOutputhPath(string inputPath, string outputPath)
@@ -123,6 +116,18 @@ namespace XSLTransform
             return returnPath;
         }
 
-        
+        private static void TransposeXML(string inputPath, string outputPath)
+        {
+            XDocument xml = XDocument.Load(inputPath);
+
+            ProductionReport report = ProductionReport.Deserialize(xml);
+
+
+            Serializer serializer = new Serializer();
+
+            serializer.SerializeCars(report);
+            serializer.SaveToFile(outputPath);
+
+        }
     }
 }

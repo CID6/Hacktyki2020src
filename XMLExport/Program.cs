@@ -13,7 +13,7 @@ namespace XMLExport
     {
         static void Main(string[] args)
         {
-            Hardcoded();
+            Dynamic();
 
             Console.ReadLine();
         }
@@ -38,8 +38,27 @@ namespace XMLExport
             Console.WriteLine();
 
             DefaultSerializer serializer = new DefaultSerializer(deserializer.Root);
-            //serializer.TurnAttributesIntoChildren();
+            serializer.TurnAttributesIntoChildren("Car");
             serializer.Serialize("Car");
+            serializer.Save(@"C:\Users\Czarek\Desktop\carXml2.xml");
+
+
+            Console.ReadLine();
+        }
+
+        static void Dynamic2()
+        {
+            XDocument xml = XDocument.Load("https://www.w3schools.com/xml/plant_catalog.xml");
+
+            DefaultDeserializer deserializer = new DefaultDeserializer(xml);
+            deserializer.Deserialize();
+
+
+            Console.WriteLine();
+
+            DefaultSerializer serializer = new DefaultSerializer(deserializer.Root);
+            //serializer.TurnAttributesIntoChildren();
+            serializer.Serialize("COMMON");
             serializer.Save(@"C:\Users\Czarek\Desktop\carXml2.xml");
 
 
@@ -60,7 +79,7 @@ namespace XMLExport
             serializer.SerializeCars(report);
             serializer.SaveToFile(@"C:\Users\Czarek\Desktop\carXml.xml");
 
-            serializer.TransformToCSV(@"C:\Users\Czarek\Desktop\carXml.xml", @"C:\Users\Czarek\Desktop\carCSV.csv", Resource.XSLFile2);
+            serializer.TransformToCSV(@"C:\Users\Czarek\Desktop\carXml.xml", @"C:\Users\Czarek\Desktop\carCSV.csv", Resource.XSLFile3);
 
             Console.ReadLine();
         }

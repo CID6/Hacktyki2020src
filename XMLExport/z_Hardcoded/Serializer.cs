@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Xsl;
 
@@ -37,8 +38,13 @@ namespace XMLExport
         {
             if (CarDocument == null) throw new Exception("Document is not created.");
 
+            XsltSettings settings = new XsltSettings(true, true);
+            settings.EnableScript = true;
+            settings.EnableDocumentFunction = true;
+
             XslCompiledTransform xslt = new XslCompiledTransform();
-            xslt.Load(xslPath);
+            xslt.Load(xslPath, settings, new XmlUrlResolver());
+            
             
             xslt.Transform(inputXMLpath, outputCSVpath);
 

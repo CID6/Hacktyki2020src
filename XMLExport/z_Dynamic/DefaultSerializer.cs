@@ -81,7 +81,15 @@ namespace XMLExport
             if(Root != null) TurnAttributesIntoChildren(Root);
         }
 
-        public void TurnAttributesIntoChildren(DeserializedElement element)
+        public void TurnAttributesIntoChildren(string targetElement)
+        {
+            foreach (var element in Find(targetElement))
+            {
+                element.TurnAttributesIntoChildren();
+            }
+        }
+
+        private void TurnAttributesIntoChildren(DeserializedElement element)
         {
             element.TurnAttributesIntoChildren();
 

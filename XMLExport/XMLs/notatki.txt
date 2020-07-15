@@ -28,6 +28,7 @@ NIE
 			-komentarz na dole pliku wygląda nieprofesjonalnie?
 			-user musi ręcznie wpisać w komentarzu jakie kolumny serializować (może to i lepiej) | ewentualnie można to robić automatycznie, tzn. serializer wybiera do dole kolumny
 			z których da się zrobić CSV
+			-ciężko dostać sie do komentarzy z poziomu xsl
 
 	5)Ogólny XSLT do zamiany XML w CSV z ręcznie wpisywanymi nazwami kolumn do serializacji
 		zalety:
@@ -35,6 +36,7 @@ NIE
 			-nie trzeba niczego usuwać
 		wady:
 			-ręczna zmiana kolumn
+			-w xsl nie ma tablic, a z niewiadomych przyczyn funkcja document() nie jest uruchamiana. format ręcznego wpisywania kolumn póki co jest dość toporny
 
 TAK
 	1)Template XSL do którego wstawiam nazwy kolumn do transformacji
@@ -49,6 +51,8 @@ TAK
 	Reszta odbywa się podobnie jak w TAK-1
 		zalety:
 			-działa i jest automatyczne	
+			-wygodniejsze wpisywanie niż wpisywywanie bezpośrednio do xsla (na razie)
+			-gdy nie wybierasz kolumn odbywa się to automatycznie, podobnie jak w NIE-3
 		wady:
 			-ręczne wpisywanie
 			-problemy z interfejsem, aplikacja ma być konsolowa (czy na pewno musi?)

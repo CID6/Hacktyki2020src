@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace XMLExportH
 {
-    class Program
+    public class Program
     {
         //0 - input path
         //1 - outputPath

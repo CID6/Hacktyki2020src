@@ -84,7 +84,7 @@ namespace XMLExport
             Attributes.Clear();
         }
 
-        private string NormalizeAttributeValue(string attributeValue)
+        protected string NormalizeAttributeValue(string attributeValue)
         {
             string returnString = attributeValue.Replace("\n", "");
             returnString = returnString.Replace("\r", "");

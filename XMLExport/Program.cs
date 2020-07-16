@@ -16,12 +16,24 @@ namespace XMLExport
         //2 - column
         static int Main(string[] args)
         {
-            MAIN2(args);
+            XSLConstructor();
 
 
             Console.ReadLine();
 
             return 0;
+        }
+
+        static void XSLConstructor()
+        {
+            string[] columns = { "ProductionYear", "VIN", "Model" };
+            XSLConstructor constructor = new XSLConstructor(columns);
+
+            System.Reflection.Assembly a = System.Reflection.Assembly.GetExecutingAssembly();
+            constructor.ReadXSLTemplate(a.GetManifestResourceStream("XMLExport.XMLs.outputTemplate.xsl"));
+
+            constructor.BuildTemplate();
+            constructor.Save(@"E:\_test\xslSavepath.xsl");
         }
 
         static int MAIN2(string[] args)

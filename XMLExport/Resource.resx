@@ -132,4 +132,7 @@
   <data name="XSLFile3" xml:space="preserve">
     <value>../../../XMLs/output4.xsl</value>
   </data>
+  <data name="XSLTemplate" xml:space="preserve">
+    <value>../../../XMLs/outputTemplate.xsl</value>
+  </data>
 </root>

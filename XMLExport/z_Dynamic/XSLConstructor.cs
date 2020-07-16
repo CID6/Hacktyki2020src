@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
@@ -8,44 +9,85 @@ namespace XMLExport
 {
     public class XSLConstructor
     {
-        public XDocument Document { get; private set; } = new XDocument();
-        private readonly XNamespace xslNS = "xsl";
+        public string XSLTemplate { get; set; } = null;
+        public string[] Columns { get; set; }
 
-        public XSLConstructor()
+        const string tempColumnDefinition = "%%COLUMN_TEMPLATE%%";
+        const string tempRowDefinition = "%%ROW_TEMPLATE%%";
+        const string textDefinitionS = "<xsl:text>";
+        const string textDefinitionE = "</xsl:text>";
+        const string valueOfDefinition = "<xsl:value-of select=\"%%ROW_VALUE%%\"/>";
+        const string valueOfPlaceholder = "%%ROW_VALUE%%";
+        const string commaDefinition = "<xsl:text>,</xsl:text>";
+        const string endl = "\n";
+
+        public XSLConstructor(string[] columns)
         {
-            XNamespace xslDeclaration = "http://www.w3.org/1999/XSL/Transform";
-
-            XElement header = new XElement("stylesheet",
-                new XAttribute(XNamespace.Xmlns + "xsl", xslDeclaration));
-
-
-            //header.SetAttributeValue(XNamespace.Xmlns + "xsl", xslDeclaration);
-            //header.SetAttributeValue("version", "1.0");
-
-            Document.Add(header);
-
-            XElement outputMethod = new XElement(xslNS + "output");
-            outputMethod.SetAttributeValue("method", "text");
-            outputMethod.SetAttributeValue("omit-xml-declaration", "yes");
-
-            header.Add(outputMethod);
-
-            
+            Columns = columns;
         }
 
+        public void ReadXSLTemplate(string path)
+        {
+            XSLTemplate = File.ReadAllText(path);
+        }
+
+        public void ReadXSLTemplate(Stream fileStream)
+        {
+            using(StreamReader sr = new StreamReader(fileStream))
+            {
+                XSLTemplate = sr.ReadToEnd();
+            }
+        }
+
+        public void BuildTemplate()
+        {
+            if (XSLTemplate!=null)
+            {
+                BuildColumnDefinition(XSLTemplate);
+                BuildRowDefinition(XSLTemplate);
+            }
+        }
+
+        private void BuildColumnDefinition(string fileString)
+        {
+            string columnDefinition = "";
+
+            for (int i = 0; i < Columns.Length; i++)
+            {
+                columnDefinition += textDefinitionS + Columns[i] + textDefinitionE;
+
+                if (i != Columns.Length - 1)
+                {
+                    columnDefinition += endl + commaDefinition + endl ;
+                }
+            }
+
+            XSLTemplate = fileString.Replace(tempColumnDefinition, columnDefinition);
+        }
+
+        private void BuildRowDefinition(string fileString)
+        {
+            string rowDefinition = "";
+
+            for (int i = 0; i < Columns.Length; i++)
+            {
+                rowDefinition += valueOfDefinition.Replace(valueOfPlaceholder, Columns[i]);
+
+                if (i != Columns.Length - 1)
+                {
+                    rowDefinition += endl + commaDefinition + endl;
+                }
+            }
+
+            XSLTemplate = fileString.Replace(tempRowDefinition, rowDefinition);
+        }
 
         public void Save(string path)
         {
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.OmitXmlDeclaration = true;
-            using (XmlWriter writer = XmlWriter.Create(path, settings))
+            if (XSLTemplate!=null)
             {
-                Document.Save(writer);
+                File.WriteAllText(path, XSLTemplate); 
             }
-
-
-            Document.Save(path);
         }
-
     }
 }

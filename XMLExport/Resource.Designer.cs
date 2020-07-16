@@ -104,5 +104,14 @@ namespace XMLExport {
                 return ResourceManager.GetString("XSLFile3", resourceCulture);
             }
         }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu ../../../XMLs/outputTemplate.xsl.
+        /// </summary>
+        internal static string XSLTemplate {
+            get {
+                return ResourceManager.GetString("XSLTemplate", resourceCulture);
+            }
+        }
     }
 }

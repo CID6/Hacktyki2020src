@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "XMLExportDC": {
+      "commandName": "Project",
+      "commandLineArgs": "E:\\_test\\ProductionResults.xml Car VIN Model ProductionYear"
+    }
+  }
+}

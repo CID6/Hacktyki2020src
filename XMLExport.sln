@@ -16,7 +16,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XSLTransform", "XSLTransfor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLExportH", "XMLExportH\XMLExportH.csproj", "{554BCA9F-41D0-458C-BF8C-59891256E354}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XSLConstructor", "XSLConstructor\XSLConstructor.csproj", "{D0942A3F-18ED-4501-992A-C7861817B101}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XSLConstructor", "XSLConstructor\XSLConstructor.csproj", "{D0942A3F-18ED-4501-992A-C7861817B101}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLExportHC", "XMLExportHC\XMLExportHC.csproj", "{893E4F2C-B682-411A-A84C-31599ADC724A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLExportDC", "XMLExportDC\XMLExportDC.csproj", "{964116C1-DAD1-4B64-A0DE-D3E7AC8D82AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +48,14 @@ Global
 		{D0942A3F-18ED-4501-992A-C7861817B101}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0942A3F-18ED-4501-992A-C7861817B101}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0942A3F-18ED-4501-992A-C7861817B101}.Release|Any CPU.Build.0 = Release|Any CPU
+		{893E4F2C-B682-411A-A84C-31599ADC724A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{893E4F2C-B682-411A-A84C-31599ADC724A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{893E4F2C-B682-411A-A84C-31599ADC724A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{893E4F2C-B682-411A-A84C-31599ADC724A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{964116C1-DAD1-4B64-A0DE-D3E7AC8D82AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{964116C1-DAD1-4B64-A0DE-D3E7AC8D82AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{964116C1-DAD1-4B64-A0DE-D3E7AC8D82AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{964116C1-DAD1-4B64-A0DE-D3E7AC8D82AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

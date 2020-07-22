@@ -16,7 +16,7 @@ namespace XMLExport
         //2 - column
         static int Main(string[] args)
         {
-            XSLConstructor();
+            MAIN2(args);
 
 
             Console.ReadLine();

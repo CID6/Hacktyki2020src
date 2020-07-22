@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="XMLs\outputTemplate.xsl" />
+    <None Remove="XMLs\output3.xsl" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="XMLs\outputTemplate.xsl" />
+    <EmbeddedResource Include="XMLs\output3.xsl" />
   </ItemGroup>
 
 </Project>

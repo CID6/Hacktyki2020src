@@ -18,9 +18,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLExportH", "XMLExportH\XM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XSLConstructor", "XSLConstructor\XSLConstructor.csproj", "{D0942A3F-18ED-4501-992A-C7861817B101}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLExportHC", "XMLExportHC\XMLExportHC.csproj", "{893E4F2C-B682-411A-A84C-31599ADC724A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLExportHC", "XMLExportHC\XMLExportHC.csproj", "{893E4F2C-B682-411A-A84C-31599ADC724A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLExportDC", "XMLExportDC\XMLExportDC.csproj", "{964116C1-DAD1-4B64-A0DE-D3E7AC8D82AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLExportDC", "XMLExportDC\XMLExportDC.csproj", "{964116C1-DAD1-4B64-A0DE-D3E7AC8D82AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitReceive", "..\..\..\Desktop\ProjektyVS\RabbitP\RabbitReceive\RabbitReceive\RabbitReceive.csproj", "{78BDC736-84CE-4174-B4C3-D3DFE1F41788}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitSend", "..\..\..\Desktop\ProjektyVS\RabbitP\RabbitSend\RabbitSend\RabbitSend.csproj", "{ACD68C59-9AF0-4FD7-8DC0-E178146EF13E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +60,14 @@ Global
 		{964116C1-DAD1-4B64-A0DE-D3E7AC8D82AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{964116C1-DAD1-4B64-A0DE-D3E7AC8D82AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{964116C1-DAD1-4B64-A0DE-D3E7AC8D82AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78BDC736-84CE-4174-B4C3-D3DFE1F41788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78BDC736-84CE-4174-B4C3-D3DFE1F41788}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78BDC736-84CE-4174-B4C3-D3DFE1F41788}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78BDC736-84CE-4174-B4C3-D3DFE1F41788}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACD68C59-9AF0-4FD7-8DC0-E178146EF13E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACD68C59-9AF0-4FD7-8DC0-E178146EF13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACD68C59-9AF0-4FD7-8DC0-E178146EF13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACD68C59-9AF0-4FD7-8DC0-E178146EF13E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

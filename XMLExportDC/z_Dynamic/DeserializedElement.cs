@@ -11,7 +11,6 @@ namespace XMLExportDC
         private XElement Element { get; set; }
 
         public string Name { get; private set; }
-        public DeserializedElement Parent { get; private set; }   //tba
         public List<DeserializedElement> Children { get; private set; }
         public string Value { get; private set; }
         public Dictionary<string, string> Attributes { get; private set; }

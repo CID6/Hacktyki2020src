@@ -18,7 +18,7 @@ namespace XMLExportDC
         //-o
         //-c
 
-        const string usageMessage = "Usage: program input_path element_name {columns} [-o [output_xml_path]] [-c [output_csv_path]]";
+        const string usageMessage = "Usage: program input_path element_name {columns} [-o [output_xml_path]] [-c [output_csv_path]] [-x [output_xsl_path]]";
         static int Main(string[] args)
         {
 
@@ -28,6 +28,7 @@ namespace XMLExportDC
             string inputPath = args[0];
             string outputXMLPath = null;
             string outputCSVPath = null;
+            string outputXSLPath = null;
             string elementName = args[1];
 
             try
@@ -39,6 +40,18 @@ namespace XMLExportDC
                 Console.WriteLine(e.Message);
                 Console.WriteLine(usageMessage);
                 return 100;
+            }
+
+            try
+            {
+                outputXSLPath = OuputXSLOption(args);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(usageMessage);
+
+                return 1101;
             }
 
             try
@@ -69,25 +82,31 @@ namespace XMLExportDC
             List<string> columnNames = null;
             columnNames = new List<string>(ParseColumns(args));
 
+            MemoryStream xslStream = null;
 
+            try
+            {
+                xslStream = ConstructXSL(columnnames: columnNames, outputXSLPath: outputXSLPath);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(usageMessage);
+                return 1011;
+            }
 
+          
 
-            XSLConstructor constructor = new XSLConstructor(columnNames);
-
-            System.Reflection.Assembly a = System.Reflection.Assembly.GetExecutingAssembly();
-            constructor.ReadXSLTemplate(a.GetManifestResourceStream("XMLExportDC.XMLs.outputTemplate.xsl"));
-
-            constructor.BuildTemplate();
-
-
-            byte[] xslTemplateBytes = Encoding.UTF8.GetBytes(constructor.XSLTemplate);
-            MemoryStream xslStream = new MemoryStream(xslTemplateBytes);
-
-            //constructor.Save(@"E:\_test\xslSavepath.xsl");
-
-
-
-            TransformToCSV(transposedStream, outputCSVPath, xslStream);
+            try
+            {
+                TransformToCSV(transposedStream, outputCSVPath, xslStream);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(usageMessage);
+                return 1110;
+            }
 
             return 0;
         }
@@ -125,21 +144,48 @@ namespace XMLExportDC
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine("Please input the output XML file's path.");
-                        Console.WriteLine(usageMessage);
-                        throw;
+                        throw new Exception("Please input the output XML file's path.");
                     }
                 }
             }
 
             if (outputXMLLocation != null)
             {
-                outputXMLLocation = PrepareOutputhPath(args[0], outputXMLLocation, "xml");
+                outputXMLLocation = PrepareOutputPath(args[0], outputXMLLocation, "_serialized", "xml");
 
                 Console.WriteLine("Option -o was given. File will be saved at: {0}", outputXMLLocation);
             }
 
             return outputXMLLocation;
+
+        }
+
+        private static string OuputXSLOption(string[] args)
+        {
+            string outputXSLLocation = null;
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i] == "-x")
+                {
+                    try
+                    {
+                        outputXSLLocation = args[i + 1];
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception("Please input the output XSL file's path.");
+                    }
+                }
+            }
+
+            if (outputXSLLocation != null)
+            {
+                outputXSLLocation = PrepareOutputPath(args[0], outputXSLLocation, "_template", "xsl");
+
+                Console.WriteLine("Option -x was given. File will be saved at: {0}", outputXSLLocation);
+            }
+
+            return outputXSLLocation;
 
         }
 
@@ -156,16 +202,14 @@ namespace XMLExportDC
                     }
                     catch
                     {
-                        Console.WriteLine("Please input the output CSV file's path.");
-                        Console.WriteLine(usageMessage);
-                        throw;
+                        throw new Exception("Please input the output CSV file's path.");
                     }
                 }
             }
 
             if (outputCSVLocation != null)
             {
-                outputCSVLocation = PrepareOutputhPath(args[0], outputCSVLocation, "csv");
+                outputCSVLocation = PrepareOutputPath(args[0], outputCSVLocation,"_output", "csv");
 
                 Console.WriteLine("Option -c was given. CSV file will be saved at: {0}", outputCSVLocation);
             }
@@ -192,7 +236,7 @@ namespace XMLExportDC
             return outputPath;
         }
 
-        private static string PrepareOutputhPath(string inputPath, string outputPath, string extension)
+        private static string PrepareOutputPath(string inputPath, string outputPath, string extraName, string extension)
         {
             string returnPath;
             if (!File.Exists(outputPath))
@@ -213,7 +257,7 @@ namespace XMLExportDC
                 {
 
                     //Console.WriteLine("file is a directory");
-                    string filename = Path.GetFileNameWithoutExtension(inputPath) + "_output";
+                    string filename = Path.GetFileNameWithoutExtension(inputPath) + extraName;
                     filename = Path.ChangeExtension(filename, extension);
 
                     returnPath = Path.Join(outputPath, filename);
@@ -259,7 +303,7 @@ namespace XMLExportDC
         {
             int i = 2;
             List<string> columnList = new List<string>();
-            while(i <= args.Length - 1 && args[i]!="-o" && args[i] != "-c")
+            while(i <= args.Length - 1 && args[i]!="-o" && args[i] != "-c" && args[i] != "-x")
             {
                 columnList.Add(args[i]);
                 i++;
@@ -282,8 +326,34 @@ namespace XMLExportDC
 
             XmlReader inputReader = XmlReader.Create(inputXMLStream);
             Stream stream = new MemoryStream();
-            xslt.Transform(input: inputReader, arguments: null, results: new FileStream(outputCSVpath, FileMode.OpenOrCreate, FileAccess.Write));
+            xslt.Transform(input: inputReader, arguments: null, results: new FileStream(outputCSVpath, FileMode.Create, FileAccess.Write));
 
+        }
+
+        private static MemoryStream ConstructXSL(IEnumerable<string> columnnames, string outputXSLPath)
+        {
+            XSLConstructor constructor = new XSLConstructor(columnnames);
+
+            System.Reflection.Assembly a = System.Reflection.Assembly.GetExecutingAssembly();
+            constructor.ReadXSLTemplate(a.GetManifestResourceStream("XMLExportDC.XMLs.outputTemplate.xsl"));
+
+            constructor.BuildTemplate();
+
+
+            byte[] xslTemplateBytes = Encoding.UTF8.GetBytes(constructor.XSLTemplate);
+            MemoryStream xslStream = new MemoryStream(xslTemplateBytes);
+
+            if (outputXSLPath != null)
+            {
+                using (var fileStream = new FileStream(outputXSLPath, FileMode.Create, FileAccess.Write))
+                {
+                    xslStream.CopyTo(fileStream);
+                }
+
+                xslStream.Seek(0, SeekOrigin.Begin);
+            }
+
+            return xslStream;
         }
     }
 }

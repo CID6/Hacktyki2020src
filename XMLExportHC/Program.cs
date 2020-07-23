@@ -188,7 +188,7 @@ namespace XMLExportHC
 
             XmlReader inputReader = XmlReader.Create(inputXMLStream);
             Stream stream = new MemoryStream();
-            xslt.Transform(input: inputReader, arguments: null, results: new FileStream(outputCSVpath, FileMode.OpenOrCreate, FileAccess.Write));
+            xslt.Transform(input: inputReader, arguments: null, results: new FileStream(outputCSVpath, FileMode.Create, FileAccess.Write));
 
         }
 

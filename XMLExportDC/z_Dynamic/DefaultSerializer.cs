@@ -50,7 +50,6 @@ namespace XMLExportDC
 
             if (deserializedElement.Value != null)
             {
-                //element.Value = deserializedElement.Value;
                 element.Add(deserializedElement.Value);
             }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using RabbitMQ.Client;
+using System.IO;
 
 namespace RabbitSend
 {
@@ -8,6 +9,11 @@ namespace RabbitSend
     {
         static void Main(string[] args)
         {
+            if (args.Length == 0)
+            {
+                return;
+            }
+
             Main2(args);
 
             Console.ReadLine();
@@ -54,8 +60,8 @@ namespace RabbitSend
         {
             var rpcClient = new RpcClient();
 
-            Console.WriteLine(" [x] Requesting fib({0})", GetMessage(args));
-            var response = rpcClient.Call(GetMessage(args));
+            Console.WriteLine("Sending file {0}", args[0]);
+            string response = rpcClient.Call(File.ReadAllText(args[0]));
 
             Console.WriteLine(" [.] Got '{0}'", response);
             rpcClient.Close();

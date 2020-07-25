@@ -26,6 +26,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitReceive", "RabbitRece
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitSend", "RabbitSend\RabbitSend.csproj", "{CF579BC3-C327-4647-AC55-9284B81E11C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsertDataIntoSQLServer", "InsertDataIntoSQLServer\InsertDataIntoSQLServer.csproj", "{0CEC6624-820E-471B-871D-BC70A97B4758}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitReceiveFramework", "RabbitReceiveFramework\RabbitReceiveFramework.csproj", "{E66D6612-FF0B-4492-B6CB-CAB16F974F49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +72,14 @@ Global
 		{CF579BC3-C327-4647-AC55-9284B81E11C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF579BC3-C327-4647-AC55-9284B81E11C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF579BC3-C327-4647-AC55-9284B81E11C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CEC6624-820E-471B-871D-BC70A97B4758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CEC6624-820E-471B-871D-BC70A97B4758}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CEC6624-820E-471B-871D-BC70A97B4758}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CEC6624-820E-471B-871D-BC70A97B4758}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E66D6612-FF0B-4492-B6CB-CAB16F974F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E66D6612-FF0B-4492-B6CB-CAB16F974F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E66D6612-FF0B-4492-B6CB-CAB16F974F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E66D6612-FF0B-4492-B6CB-CAB16F974F49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

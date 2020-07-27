@@ -83,6 +83,15 @@ namespace XMLExportDC
             Attributes.Clear();
         }
 
+        public void TurnValueIntoChild()
+        {
+            if(Value!=null || Value != "")
+            {
+                Children.Add(new DeserializedElement(name: Name + "_value", value: Value));
+                Value = null;
+            }
+        }
+
         protected string NormalizeAttributeValue(string attributeValue)
         {
             string returnString = attributeValue.Replace("\n", "");

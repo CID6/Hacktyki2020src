@@ -98,6 +98,14 @@ namespace XMLExportDC
             }
         }
 
+        public void TurnValuesIntoChildren(string targetElement)
+        {
+            foreach(var element in Find(targetElement))
+            {
+                element.TurnValueIntoChild();
+            }
+        }
+
         private void TraverseTreeAndAddElementsByName(DeserializedElement element, List<DeserializedElement> list, string elementName)
         {
             if (element.Name == elementName) list.Add(element);

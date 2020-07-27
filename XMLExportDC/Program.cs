@@ -286,6 +286,7 @@ namespace XMLExportDC
 
             DefaultSerializer serializer = new DefaultSerializer(deserializer.Root);
             serializer.TurnAttributesIntoChildren(columnName);
+            serializer.TurnValuesIntoChildren(columnName);
             serializer.Serialize(columnName);
             if (outputPath!=null)
             {

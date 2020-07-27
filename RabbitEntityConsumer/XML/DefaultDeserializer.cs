@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Xml.Linq;
 
@@ -18,6 +19,11 @@ namespace RabbitEntityConsumer
         public DefaultDeserializer(string path)
         {
             Document = XDocument.Load(path);
+        }
+
+        public DefaultDeserializer(Stream stream)
+        {
+            Document = XDocument.Load(stream);
         }
 
         public void Deserialize()

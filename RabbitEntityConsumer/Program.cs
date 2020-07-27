@@ -1,8 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore.Internal;
 using RabbitEntityConsumer.Models;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using System;
 using System.Data.Entity.Core.Objects;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Xml.Linq;
 
 namespace RabbitEntityConsumer
 {
@@ -10,53 +15,108 @@ namespace RabbitEntityConsumer
     {
         static void Main(string[] args)
         {
+            ConnectionFactory factory = new ConnectionFactory() { HostName = "localhost" };
 
+            using (IConnection connection = factory.CreateConnection())
+            using (IModel channel = connection.CreateModel())
+            {
+                channel.QueueDeclare(queue: "rpc_queue", durable: false, exclusive: false, autoDelete: false, arguments: null);
+                channel.BasicQos(0, 1, false);
+                EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
+                channel.BasicConsume(queue: "rpc_queue", autoAck: false, consumer: consumer);
+                Console.WriteLine(" [x] Awaiting RPC requests");
 
+                consumer.Received += (model, ea) =>
+                {
+                    string response = null;
 
+                    byte[] body = ea.Body.ToArray();
+                    IBasicProperties props = ea.BasicProperties;
+                    IBasicProperties replyProps = channel.CreateBasicProperties();
+                    replyProps.CorrelationId = props.CorrelationId;
 
+                    try
+                    {
+                        Console.WriteLine(" [.] Received report");
+                        MemoryStream stream = new MemoryStream(body);
+                        AddToDatabase(stream);
+                        Console.WriteLine(" [.] Report added to the database");
+                        response = "Report added to the database.";
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(" [.] " + e.Message);
+                        response = "An error has occured";
+                    }
+                    finally
+                    {
+                        byte[] responseBytes = Encoding.UTF8.GetBytes(response);
+                        channel.BasicPublish(exchange: "", routingKey: props.ReplyTo, basicProperties: replyProps, body: responseBytes);
+                        channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+                    }
+                };
+
+                Console.WriteLine(" Press [enter] to exit.");
+                Console.ReadLine();
+            }
         }
 
-        static void Main2(string[] args)
+        static void AddToDatabase(Stream stream)
         {
-
-            DefaultDeserializer deserializer = new DefaultDeserializer(args[0]);
+            DefaultDeserializer deserializer = new DefaultDeserializer(stream);
             deserializer.Deserialize();
 
-            var db = new CarsDBContext();
+            CarsDBContext db = new CarsDBContext();
 
 
-            var carModelsQuery = db.CarModels;
-            var carFactoriesQuery = db.CarFactories;
+            try
+            {
+                AddCarProducts(db, deserializer);
+                db.SaveChanges();
 
-            foreach(var factory in deserializer.Find("Factory"))
+                AddCarProductCarFeature(db, deserializer);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        
+        static void AddCarProducts(CarsDBContext context, DefaultDeserializer deserializer)
+        {
+            var carModelsQuery = context.CarModels;
+            var carFactoriesQuery = context.CarFactories;
+
+            foreach (var factory in deserializer.Find("Factory"))
             {
                 //finds factory id by correlating same factory name attribute and Name column in CarFactories
                 int factoryID = carFactoriesQuery.Where(s => s.Name == factory.Attributes["Name"]).First().Id;
-                foreach(var car in factory.FindChildren("Car"))
+                foreach (var car in factory.FindChildren("Car"))
                 {
                     int carID = carModelsQuery.Where(s => s.Name == car.FindChildren("Model").First().Value).First().Id;
                     short carYear = short.Parse(car.FindChildren("ProductionYear").First().Value);
                     string carVIN = car.Attributes["VIN"];
-                    db.Add(new CarProducts { CarModelId = carID, Year = carYear, Vin = carVIN, FactoryId = factoryID });
+                    context.Add(new CarProducts { CarModelId = carID, Year = carYear, Vin = carVIN, FactoryId = factoryID });
                 }
             }
-            db.SaveChanges();
+        }
 
-            var carProductsQuery = db.CarProducts;
-            var carFeaturesQuery = db.CarFeatures;
 
-            foreach(var car in deserializer.Find("Car"))
+        static void AddCarProductCarFeature(CarsDBContext context, DefaultDeserializer deserializer)
+        {
+            var carProductsQuery = context.CarProducts;
+            var carFeaturesQuery = context.CarFeatures;
+
+            foreach (var car in deserializer.Find("Car"))
             {
                 int carID = carProductsQuery.Where(s => s.Vin == car.Attributes["VIN"]).First().Id;
-                foreach(var feature in car.FindChildren("Feature"))
+                foreach (var feature in car.FindChildren("Feature"))
                 {
                     int featureID = carFeaturesQuery.Where(s => s.Code == feature.Attributes["Code"]).First().Id;
-                    db.Add(new CarProductCarFeature { CarProductId = carID, InstalledFeatureId = featureID });
+                    context.Add(new CarProductCarFeature { CarProductId = carID, InstalledFeatureId = featureID });
                 }
             }
-
-
-            db.SaveChanges();
         }
     }
 }

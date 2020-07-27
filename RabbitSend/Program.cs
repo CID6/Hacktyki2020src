@@ -1,7 +1,7 @@
-﻿using System;
-using System.Text;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
+using System;
 using System.IO;
+using System.Text;
 
 namespace RabbitSend
 {

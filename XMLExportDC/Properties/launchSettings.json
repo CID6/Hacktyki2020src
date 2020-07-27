@@ -3,6 +3,9 @@
     "XMLExportDC": {
       "commandName": "Project",
       "commandLineArgs": "E:\\_test\\ProductionResults.xml Car VIN Model ProductionYear"
+    },
+    "EF": {
+      "commandName": "Project"
     }
   }
 }

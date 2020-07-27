@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RabbitEntityConsumer": {
+      "commandName": "Project",
+      "commandLineArgs": "E:\\_test\\ProductionResults.xml"
+    }
+  }
+}

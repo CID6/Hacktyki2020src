@@ -171,7 +171,7 @@ namespace XMLExportDC
                     {
                         outputXSLLocation = args[i + 1];
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         throw new Exception("Please input the output XSL file's path.");
                     }

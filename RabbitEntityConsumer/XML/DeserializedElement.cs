@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-namespace XMLExportDC
+namespace RabbitEntityConsumer
 {
     public class DeserializedElement
     {

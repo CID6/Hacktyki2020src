@@ -24,7 +24,7 @@ namespace RabbitEntityConsumer.Models
         public virtual DbSet<Cities> Cities { get; set; }
         public virtual DbSet<Countries> Countries { get; set; }
         public virtual DbSet<Manufacturers> Manufacturers { get; set; }
-        public virtual DbSet<XmlwithOpenXml> XmlwithOpenXml { get; set; }
+        public virtual DbSet<Reports> Reports { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -178,14 +178,14 @@ namespace RabbitEntityConsumer.Models
                     .HasConstraintName("FK_CountryManufacturer");
             });
 
-            modelBuilder.Entity<XmlwithOpenXml>(entity =>
+            modelBuilder.Entity<Reports>(entity =>
             {
-                entity.ToTable("XMLwithOpenXML");
+                entity.ToTable("Reports");
 
-                entity.Property(e => e.LoadedDateTime).HasColumnType("datetime");
+                entity.Property(e => e.RequestedDateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.Xmldata)
-                    .HasColumnName("XMLData")
+                entity.Property(e => e.ReportData)
+                    .HasColumnName("ReportData")
                     .HasColumnType("xml");
             });
 

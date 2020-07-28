@@ -3,7 +3,6 @@ using RabbitEntityConsumer.Models;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
-using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -45,8 +44,9 @@ namespace RabbitEntityConsumer
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(" [.] " + e.Message);
-                        response = "An error has occured";
+                        string exMessage = e.InnerException.Message;
+                        Console.WriteLine(" [.] " + exMessage);
+                        response = "An error has occured: " + exMessage;
                     }
                     finally
                     {
@@ -56,7 +56,7 @@ namespace RabbitEntityConsumer
                     }
                 };
 
-                Console.WriteLine(" Press [enter] to exit.");
+                Console.WriteLine(" Type [exit] to exit.");
                 Console.ReadLine();
             }
         }
@@ -68,6 +68,18 @@ namespace RabbitEntityConsumer
 
             CarsDBContext db = new CarsDBContext();
 
+            //gets reference to added report for later
+            Reports addedReport;
+
+            try
+            {
+                addedReport = AddReport(db, deserializer.Document.ToString());
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
 
             try
             {
@@ -77,10 +89,14 @@ namespace RabbitEntityConsumer
                 AddCarProductCarFeature(db, deserializer);
                 db.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
+
+            ConfirmReport(context: db, reportToConfirm: addedReport);
+            db.SaveChanges();
+
         }
         
         static void AddCarProducts(CarsDBContext context, DefaultDeserializer deserializer)
@@ -117,6 +133,19 @@ namespace RabbitEntityConsumer
                     context.Add(new CarProductCarFeature { CarProductId = carID, InstalledFeatureId = featureID });
                 }
             }
+        }
+
+
+        static Reports AddReport(CarsDBContext context, string xmlText)
+        {
+            Reports report = new Reports { ReportData = xmlText, RequestedDateTime = DateTime.Now, AddedToDatabase = false };
+            context.Add(report);
+            return report;
+        }
+
+        static void ConfirmReport(CarsDBContext context, Reports reportToConfirm)
+        {
+            reportToConfirm.AddedToDatabase = true;
         }
     }
 }

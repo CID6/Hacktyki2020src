@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLExport", "XMLExport\XMLExport.csproj", "{25F8F98E-8450-438D-906B-00A1C0242E5B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLExportTests", "XMLExportTests\XMLExportTests.csproj", "{114042AD-DEF9-48E4-837F-DAF37D871667}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4F906A57-D6DA-4B8E-959A-06DBA194BF06}"
@@ -15,23 +13,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XSLTransform", "XSLTransform\XSLTransform.csproj", "{14AF486E-BB77-42C7-81F5-7B2B2EAB1A2D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLExportH", "XMLExportH\XMLExportH.csproj", "{554BCA9F-41D0-458C-BF8C-59891256E354}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XSLConstructor", "XSLConstructor\XSLConstructor.csproj", "{D0942A3F-18ED-4501-992A-C7861817B101}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLExportHC", "XMLExportHC\XMLExportHC.csproj", "{893E4F2C-B682-411A-A84C-31599ADC724A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLExportDC", "XMLExportDC\XMLExportDC.csproj", "{964116C1-DAD1-4B64-A0DE-D3E7AC8D82AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitReceive", "RabbitReceive\RabbitReceive.csproj", "{9CF58EC3-C8E0-463A-8444-C5D07D47659A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsertDataIntoSQLServer", "InsertDataIntoSQLServer\InsertDataIntoSQLServer.csproj", "{0CEC6624-820E-471B-871D-BC70A97B4758}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitReceiveFramework", "RabbitReceiveFramework\RabbitReceiveFramework.csproj", "{E66D6612-FF0B-4492-B6CB-CAB16F974F49}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitEntityConsumer", "RabbitEntityConsumer\RabbitEntityConsumer.csproj", "{A979B925-E912-4297-A6EA-2644A5B7AD80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitProducer", "RabbitProducer\RabbitProducer.csproj", "{E60C46CF-9799-462C-8FCA-69E59F13584C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitProducer", "RabbitProducer\RabbitProducer.csproj", "{E60C46CF-9799-462C-8FCA-69E59F13584C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +29,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{25F8F98E-8450-438D-906B-00A1C0242E5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{25F8F98E-8450-438D-906B-00A1C0242E5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{25F8F98E-8450-438D-906B-00A1C0242E5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{25F8F98E-8450-438D-906B-00A1C0242E5B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{114042AD-DEF9-48E4-837F-DAF37D871667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{114042AD-DEF9-48E4-837F-DAF37D871667}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{114042AD-DEF9-48E4-837F-DAF37D871667}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,10 +37,6 @@ Global
 		{14AF486E-BB77-42C7-81F5-7B2B2EAB1A2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14AF486E-BB77-42C7-81F5-7B2B2EAB1A2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14AF486E-BB77-42C7-81F5-7B2B2EAB1A2D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{554BCA9F-41D0-458C-BF8C-59891256E354}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{554BCA9F-41D0-458C-BF8C-59891256E354}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{554BCA9F-41D0-458C-BF8C-59891256E354}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{554BCA9F-41D0-458C-BF8C-59891256E354}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D0942A3F-18ED-4501-992A-C7861817B101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D0942A3F-18ED-4501-992A-C7861817B101}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0942A3F-18ED-4501-992A-C7861817B101}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -67,18 +49,6 @@ Global
 		{964116C1-DAD1-4B64-A0DE-D3E7AC8D82AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{964116C1-DAD1-4B64-A0DE-D3E7AC8D82AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{964116C1-DAD1-4B64-A0DE-D3E7AC8D82AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9CF58EC3-C8E0-463A-8444-C5D07D47659A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9CF58EC3-C8E0-463A-8444-C5D07D47659A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9CF58EC3-C8E0-463A-8444-C5D07D47659A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9CF58EC3-C8E0-463A-8444-C5D07D47659A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0CEC6624-820E-471B-871D-BC70A97B4758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0CEC6624-820E-471B-871D-BC70A97B4758}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0CEC6624-820E-471B-871D-BC70A97B4758}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0CEC6624-820E-471B-871D-BC70A97B4758}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E66D6612-FF0B-4492-B6CB-CAB16F974F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E66D6612-FF0B-4492-B6CB-CAB16F974F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E66D6612-FF0B-4492-B6CB-CAB16F974F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E66D6612-FF0B-4492-B6CB-CAB16F974F49}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A979B925-E912-4297-A6EA-2644A5B7AD80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A979B925-E912-4297-A6EA-2644A5B7AD80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A979B925-E912-4297-A6EA-2644A5B7AD80}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Root att1="val1" att2="val2" att3="val3">
-	<Child1	foo="bar">
-		<ElementAsValue>VVVVVV</ElementAsValue>
-	</Child1>
-	RootTextValue
-</Root>

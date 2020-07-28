@@ -1,12 +1,11 @@
-
-testy dla rabbita i nowe testy dla deserializerów
 zacz¹æ ogarniaæ dokumentacje 
-poprawic w rabbicie wszelkie rzeczy ktore sa zle ale jeszcze o tym nie wiem
 logowanie
-
-
-
+zmienic stringlogin na constructor(jest w webinariach)
+wiecej testów
+opcja separatora dla xmlExport?
+opcja wrap in double quotes
 
 done:
 lepsze wyjatki
 nowa tabela dla xmlek - z datami i czy przetworzone/nieprzetworzone
+nowe testy

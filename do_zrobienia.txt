@@ -2,7 +2,8 @@ zacz¹æ ogarniaæ dokumentacje
 logowanie
 zmienic stringlogin na constructor(jest w webinariach)
 wiecej testów
-
+opcja separatora dla xmlExport?
+opcja wrap in double quotes
 
 done:
 lepsze wyjatki

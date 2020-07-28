@@ -3,18 +3,18 @@
 XMLExport is a fast and flexible solution for converting your XML files into CSV files. No more broken online converters!
 
 
-#Features
+##Features
 
--Quickly transform your XML data
--Convert you XML files into CSV files
+-Quickly transform your XML data \n
+-Convert you XML files into CSV files \n
 -Build XSL transformations for future conversions
 -Works on Windows, Linux and macOS
 
-#Requirements
+##Requirements
 
 .NETCore 3.1 required. Download from https://dotnet.microsoft.com/download
 
-#Usage
+##Usage
 
 Look how easy it is to use:
 dotnet .\XMLExportDC.dll E:\XMLData\ProductionResults.xml Car ProductionYear VIN Model

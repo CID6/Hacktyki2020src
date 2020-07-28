@@ -8,7 +8,7 @@ using System.Xml.Xsl;
 
 namespace XMLExportDC
 {
-    class Program
+    public class Program
     {
 
         //argumenty
@@ -44,7 +44,7 @@ namespace XMLExportDC
 
             try
             {
-                outputXSLPath = OuputXSLOption(args);
+                outputXSLPath = OutputXSLOption(args);
             }
             catch (Exception e)
             {
@@ -131,7 +131,7 @@ namespace XMLExportDC
             return 0;
         }
 
-        private static string OutputXMLOption(string[] args)
+        public static string OutputXMLOption(string[] args)
         {
             string outputXMLLocation = null;
             for (int i = 0; i < args.Length; i++)
@@ -160,7 +160,7 @@ namespace XMLExportDC
 
         }
 
-        private static string OuputXSLOption(string[] args)
+        public static string OutputXSLOption(string[] args)
         {
             string outputXSLLocation = null;
             for (int i = 0; i < args.Length; i++)
@@ -189,7 +189,7 @@ namespace XMLExportDC
 
         }
 
-        private static string OutputCSVOption(string[] args)
+        public static string OutputCSVOption(string[] args)
         {
             string outputCSVLocation = null;
             for (int i = 0; i < args.Length; i++)
@@ -224,7 +224,7 @@ namespace XMLExportDC
 
         }
 
-        static string CreateDefaultOutputPath(string inputPath, string extension)
+        public static string CreateDefaultOutputPath(string inputPath, string extension)
         {
             string outputPath;
 
@@ -236,7 +236,7 @@ namespace XMLExportDC
             return outputPath;
         }
 
-        private static string PrepareOutputPath(string inputPath, string outputPath, string extraName, string extension)
+        public static string PrepareOutputPath(string inputPath, string outputPath, string extraName, string extension)
         {
             string returnPath;
             if (!File.Exists(outputPath))
@@ -300,7 +300,7 @@ namespace XMLExportDC
             return stream;
         }
 
-        private static IEnumerable<string> ParseColumns(string[] args)
+        public static IEnumerable<string> ParseColumns(string[] args)
         {
             int i = 2;
             List<string> columnList = new List<string>();

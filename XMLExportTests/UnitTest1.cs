@@ -1,8 +1,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Xml.Linq;
-using XMLExport;
+using XMLExportDC;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace XMLExportTests
 {
@@ -98,33 +99,52 @@ namespace XMLExportTests
 
             Assert.AreEqual("<testname>test value</testname>", output.ToString());
         }
+
+        [TestMethod]
+        public void TurnArgsIntoChildren_Test()
+        {
+            Dictionary<string, string> testDict = new Dictionary<string, string>();
+            testDict.Add("Att", "Value");
+            DeserializedElement testElement = new DeserializedElement(name: "element", attributes: testDict);
+
+            testElement.TurnAttributesIntoChildren();
+
+            Assert.AreEqual("Value", testElement.FindChildren("Att").First().Value);
+        }
+
+        [TestMethod]
+        public void FindChildren_Test()
+        {
+            XDocument document = XDocument.Load(testXMLPath);
+            DefaultDeserializer testDeserializer = new DefaultDeserializer(document);
+            testDeserializer.Deserialize();
+
+            DeserializedElement testElement = testDeserializer.Root.FindChildren("Child1").First();
+
+            Assert.AreEqual("bar", testElement.Attributes["foo"]);
+        }
     }
 
     [TestClass]
     public class ArgumentParsingTests
     {
-        string inputPath = @"C:\Users\Czarek\source\repos\XMLExport\XMLExport\XMLs\template.xml";
-
         [TestMethod]
         public void CheckArgsValidity_IncorrectArgCount_Returns1()
         {
             string[] noArgs = { };
             string[] oneArg = { "inputPath" };
-            string[] twoArgs = { "inputPath", "outputPath" };
 
             int noArgsResult = Program.CheckArgsValidity(noArgs);
             int oneArgResult = Program.CheckArgsValidity(oneArg);
-            int twoArgsResult = Program.CheckArgsValidity(twoArgs);
 
             Assert.AreEqual(1, noArgsResult);
             Assert.AreEqual(1, oneArgResult);
-            Assert.AreEqual(1, twoArgsResult);
         }
 
         [TestMethod]
         public void CheckArgsValidity_CorrectArgCount_Returns0()
         {
-            string[] threeArgs = { "inputPath", "outputPath" , "column"};
+            string[] threeArgs = { "inputPath", "Car" , "VIN"};
 
             int threeArgsResult = Program.CheckArgsValidity(threeArgs);
 
@@ -132,54 +152,105 @@ namespace XMLExportTests
         }
 
         [TestMethod]
-        public void PrepareOutputPath_FileAlreadyExists_ReturnsFile()
+        [ExpectedException(typeof(Exception))]
+        public void OutputCSVOption_OptionWithoutArgument()
         {
-            string outputPath = @"E:\_test\asd.xml";
+            string[] args = { "inputPath", "Car", "-c" };
 
-            string result = Program.PrepareOutputhPath(inputPath, outputPath);
-
-            Assert.AreEqual(@"E:\_test\asd.xml", result);
+            Program.OutputCSVOption(args);
         }
 
         [TestMethod]
-        public void PrepareOutputPath_FileDoesntExist_ReturnsFile()
+        [ExpectedException(typeof(Exception))]
+        public void OutputXMLOption_OptionWithoutArgument()
         {
-            string outputPath = @"E:\_test\asd2.xml";
+            string[] args = { "inputPath", "Car", "-o" };
 
-            string result = Program.PrepareOutputhPath(inputPath, outputPath);
-
-            Assert.AreEqual(@"E:\_test\asd2.xml", result);
+            Program.OutputXMLOption(args);
         }
 
         [TestMethod]
-        public void PrepareOutputPath_OutputIsDirectoryWithBackslash_ReturnsFile()
+        [ExpectedException(typeof(Exception))]
+        public void OutputXSLOption_OptionWithoutArgument()
         {
-            string outputPath = @"E:\_test\";
+            string[] args = { "inputPath", "Car", "-x" };
 
-            string result = Program.PrepareOutputhPath(inputPath, outputPath);
-
-            Assert.AreEqual(@"E:\_test\template_output.xml", result);
+            Program.OutputXSLOption(args);
         }
 
         [TestMethod]
-        public void PrepareOutputPath_OutputIsDirectoryWithoutBackslash_ReturnsFile()
+        public void OutputCSVOption_FolderGiven()
         {
-            string outputPath = @"E:\_test";
+            string[] args = { @"E:\_test\inputPath", "Car", "-c", @"E:\_test" };
 
-            string result = Program.PrepareOutputhPath(inputPath, outputPath);
+            string response = Program.OutputCSVOption(args);
 
-            Assert.AreEqual(@"E:\_test\template_output.xml", result);
+            Assert.AreEqual(@"E:\_test\inputPath_output.csv", response);
         }
 
         [TestMethod]
-        public void PrepareOutputPath_OutputIsNonexistingDirectory_ReturnsFile() //wyrzuci pozniej wyjatkiem
+        public void OutputCSVOption_NonexistingFileGiven()
         {
-            string outputPath = @"E:\_test\nonexistingdirectory\anotherone\";
+            string[] args = { @"E:\_test\inputPath", "Car", "-c", @"E:\_test\nonexisting.jpg" };
 
-            string result = Program.PrepareOutputhPath(inputPath, outputPath);
+            string response = Program.OutputCSVOption(args);
 
-            Assert.AreEqual(@"E:\_test\nonexistingdirectory\anotherone\", result);
+            Assert.AreEqual(@"E:\_test\nonexisting.jpg", response);
         }
+
+        [TestMethod]
+        public void OutputCSVOption_ExistingFileGiven()
+        {
+            string[] args = { @"E:\_test\inputPath", "Car", "-c", @"E:\_test\ProductionResults.xml" };
+
+            string response = Program.OutputCSVOption(args);
+
+            Assert.AreEqual(@"E:\_test\ProductionResults.xml", response);
+        }
+
+        [TestMethod]
+        public void OutputXMLOption_FolderGiven()
+        {
+            string[] args = { @"E:\_test\inputPath", "Car", "-o", @"E:\_test" };
+
+            string response = Program.OutputXMLOption(args);
+
+            Assert.AreEqual(@"E:\_test\inputPath_serialized.xml", response);
+        }
+
+        [TestMethod]
+        public void OutputXSLOption_FolderGiven()
+        {
+            string[] args = { @"E:\_test\inputPath", "Car", "-x", @"E:\_test" };
+
+            string response = Program.OutputXSLOption(args);
+
+            Assert.AreEqual(@"E:\_test\inputPath_template.xsl", response);
+        }
+
+        [TestMethod]
+        public void ParseColumns_NoneGiven()
+        {
+            string[] args = { "inputPath", "Car", "-o", "path" };
+
+            int count = Program.ParseColumns(args).Count();
+
+            Assert.AreEqual(0, count);
+        }
+
+        [TestMethod]
+        public void ParseColumns_Given()
+        {
+            string[] args = { "inputPath", "Car", "col1", "col2", "-o", "path" };
+
+            IEnumerable<string> output = Program.ParseColumns(args);
+
+            Assert.AreEqual(2, output.Count());
+            Assert.AreEqual("col1", output.ElementAt(0));
+            Assert.AreEqual("col2", output.ElementAt(1));
+
+        }
+
 
 
     }

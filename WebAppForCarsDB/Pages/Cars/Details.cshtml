@@ -1,0 +1,43 @@
+﻿@page
+@model WebAppForCarsDB.Pages.Cars.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>CarProducts</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CarProducts.Year)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CarProducts.Year)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CarProducts.Vin)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CarProducts.Vin)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CarProducts.CarModel)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CarProducts.CarModel.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CarProducts.Factory)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CarProducts.Factory.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.CarProducts.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XMLExportDC</name>
+    </assembly>
+    <members>
+        <member name="T:XMLExportDC.DefaultDeserializer">
+            <summary>
+            Deserializes the given XML file into a tree of DeserializedElement objects.
+            </summary>
+        </member>
+        <member name="P:XMLExportDC.DefaultDeserializer.Document">
+            <summary>
+            Given document loaded into XDocument type object.
+            </summary>
+        </member>
+        <member name="P:XMLExportDC.DefaultDeserializer.Root">
+            <summary>
+            Root element of the tree.
+            </summary>
+        </member>
+        <member name="M:XMLExportDC.DefaultDeserializer.#ctor(System.Xml.Linq.XDocument)">
+            <summary>
+            Creates instance of DefaultDeserializer.
+            </summary>
+            <param name="document">XDocument of the XML</param>
+        </member>
+        <member name="M:XMLExportDC.DefaultDeserializer.#ctor(System.String)">
+            <summary>
+            Creates instance of DefaultDeserializer.
+            </summary>
+            <param name="path">Input path of .xml file</param>
+        </member>
+        <member name="M:XMLExportDC.DefaultDeserializer.Deserialize">
+            <summary>
+            Deserializes the given .xml file into tree of DeserializedElement objects.
+            </summary>
+        </member>
+        <member name="M:XMLExportDC.DefaultDeserializer.Find(System.String)">
+            <summary>
+            Returns a collection of every DeserializedElement with the given name.
+            </summary>
+            <param name="elementName">Name of the target element</param>
+            <returns>Collection of DeserializedElement with given elementName</returns>
+        </member>
+        <member name="T:XMLExportDC.DefaultSerializer">
+            <summary>
+            Serializes DeserializedElement tree back into a XML file.
+            </summary>
+        </member>
+        <member name="P:XMLExportDC.DefaultSerializer.Root">
+            <summary>
+            Root element of the tree.
+            </summary>
+        </member>
+        <member name="P:XMLExportDC.DefaultSerializer.SerializedDocument">
+            <summary>
+            Serialied XDocument
+            </summary>
+        </member>
+        <member name="M:XMLExportDC.DefaultSerializer.#ctor(XMLExportDC.DeserializedElement)">
+            <summary>
+            Creates instance of DefaultSerializer
+            </summary>
+            <param name="root"></param>
+        </member>
+        <member name="M:XMLExportDC.DefaultSerializer.Serialize(System.String)">
+            <summary>
+            Serializes the DeserializedElement tree using a given element name as a root.
+            </summary>
+            <param name="elementName">Root element name</param>
+            <returns>Serialized XDocument</returns>
+        </member>
+        <member name="M:XMLExportDC.DefaultSerializer.SerializeElement(XMLExportDC.DeserializedElement)">
+            <summary>
+            Serializes a single element.
+            </summary>
+            <param name="deserializedElement"></param>
+            <returns>The serialized element</returns>
+        </member>
+        <member name="M:XMLExportDC.DefaultSerializer.Find(System.String)">
+            <summary>
+            Returns the collection of elements with the given elementName.
+            </summary>
+            <param name="elementName">Element name to search for.</param>
+            <returns>Collection of elements of given element name.</returns>
+        </member>
+        <member name="M:XMLExportDC.DefaultSerializer.Save(System.String)">
+            <summary>
+            Saves the document to file.
+            </summary>
+            <param name="path">File path</param>
+        </member>
+        <member name="M:XMLExportDC.DefaultSerializer.TurnAttributesIntoChildren">
+            <summary>
+            Turns attributes into DeserializedElement children of the whole document.
+            </summary>
+        </member>
+        <member name="M:XMLExportDC.DefaultSerializer.TurnAttributesIntoChildren(System.String)">
+            <summary>
+            Turns attributes into DeserializedElement children of the element with the given name.
+            </summary>
+            <param name="targetElement">Element to search for</param>
+        </member>
+        <member name="M:XMLExportDC.DefaultSerializer.TurnAttributesIntoChildren(XMLExportDC.DeserializedElement)">
+            <summary>
+            Turns attributes into DeserializedElement children of the given element
+            </summary>
+            <param name="element">The given element</param>
+        </member>
+        <member name="M:XMLExportDC.DefaultSerializer.TurnValuesIntoChildren(System.String)">
+            <summary>
+            Turns value into DeserializedElement child of the element with the given name.
+            </summary>
+            <param name="targetElement">Name of the given element</param>
+        </member>
+        <member name="P:XMLExportDC.DeserializedElement.Element">
+            <summary>
+            XElement object of the deserialized element.
+            </summary>
+        </member>
+        <member name="P:XMLExportDC.DeserializedElement.Name">
+            <summary>
+            Element name
+            </summary>
+        </member>
+        <member name="P:XMLExportDC.DeserializedElement.Children">
+            <summary>
+            Element children
+            </summary>
+        </member>
+        <member name="P:XMLExportDC.DeserializedElement.Value">
+            <summary>
+            Element value
+            </summary>
+        </member>
+        <member name="P:XMLExportDC.DeserializedElement.Attributes">
+            <summary>
+            Element attributes
+            </summary>
+        </member>
+        <member name="M:XMLExportDC.DeserializedElement.#ctor(System.Xml.Linq.XElement)">
+            <summary>
+            Deserializes the given XElement
+            </summary>
+            <param name="element"></param>
+        </member>
+        <member name="M:XMLExportDC.DeserializedElement.#ctor(System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.Collections.Generic.List{XMLExportDC.DeserializedElement})">
+            <summary>
+            Creates a new DeserializedElement with the given params.
+            </summary>
+            <param name="name"></param>
+            <param name="attributes"></param>
+            <param name="value"></param>
+            <param name="children"></param>
+        </member>
+        <member name="M:XMLExportDC.DeserializedElement.TurnAttributesIntoChildren">
+            <summary>
+            Turns attributes of this element into children elements.
+            </summary>
+        </member>
+        <member name="M:XMLExportDC.DeserializedElement.TurnValueIntoChild">
+            <summary>
+            Turns value of this element into a child element.
+            </summary>
+        </member>
+        <member name="M:XMLExportDC.DeserializedElement.NormalizeAttributeValue(System.String)">
+            <summary>
+            Removes unnecessary characters from the value
+            </summary>
+            <param name="attributeValue">Unnormalized value</param>
+            <returns>Normalized value string</returns>
+        </member>
+        <member name="M:XMLExportDC.DeserializedElement.FindChildren(System.String)">
+            <summary>
+            Finds children of this element with the given element name.
+            </summary>
+            <param name="elementName">The given element name.</param>
+            <returns>Collection of elements with the given element name</returns>
+        </member>
+        <member name="T:XMLExportDC.XSLConstructor">
+            <summary>
+            Builds an XSLT file that can transfrom XML file to CSV.
+            </summary>
+        </member>
+        <member name="M:XMLExportDC.XSLConstructor.#ctor(System.String[])">
+            <summary>
+            Creates the object and sets the column names
+            </summary>
+            <param name="columns"></param>
+        </member>
+        <member name="M:XMLExportDC.XSLConstructor.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates the object and sets the column names
+            </summary>
+            <param name="columns"></param>
+        </member>
+        <member name="M:XMLExportDC.XSLConstructor.ReadXSLTemplate(System.IO.Stream)">
+            <summary>
+            Reads the special XSL template file.
+            </summary>
+            <param name="path">The input stream for the embedded file</param>
+        </member>
+        <member name="M:XMLExportDC.XSLConstructor.BuildTemplate">
+            <summary>
+            Builds the template with the given columns
+            </summary>
+        </member>
+        <member name="M:XMLExportDC.XSLConstructor.BuildColumnDefinition(System.String)">
+            <summary>
+            Inserts column definitions into the template.
+            </summary>
+            <param name="fileString"></param>
+        </member>
+        <member name="M:XMLExportDC.XSLConstructor.BuildRowDefinition(System.String)">
+            <summary>
+            Inserts row definitions into the template.
+            </summary>
+            <param name="fileString"></param>
+        </member>
+        <member name="M:XMLExportDC.XSLConstructor.Save(System.String)">
+            <summary>
+            Saves the created template to a path.
+            </summary>
+            <param name="path"></param>
+        </member>
+    </members>
+</doc>

@@ -5,6 +5,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\Czarek\source\repos\XMLExport\XMLExportDC\XMLExportDC.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="XMLs\outputTemplate.xsl" />
   </ItemGroup>

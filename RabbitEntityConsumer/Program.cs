@@ -58,6 +58,8 @@ namespace RabbitEntityConsumer
 
                 Console.WriteLine(" Type [exit] to exit.");
                 Console.ReadLine();
+
+                
             }
         }
 

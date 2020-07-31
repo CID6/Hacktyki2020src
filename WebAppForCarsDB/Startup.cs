@@ -12,6 +12,9 @@ using WebAppForCarsDB.Hubs;
 using Microsoft.EntityFrameworkCore;
 using WebAppForCarsDB.Data;
 using RabbitEntityConsumer.Models;
+using Microsoft.Data.SqlClient;
+using System.Diagnostics;
+using Microsoft.AspNetCore.SignalR;
 
 namespace WebAppForCarsDB
 {
@@ -35,6 +38,8 @@ namespace WebAppForCarsDB
 
             services.AddDbContext<CarsDBContext>(options =>
                     options.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Integrated Security=true;Database=CarsDB;"));
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,7 +68,13 @@ namespace WebAppForCarsDB
                 endpoints.MapRazorPages();
                 endpoints.MapHub<ChatHub>("/chathub");
                 endpoints.MapHub<MovieHub>("/moviehub");
+                endpoints.MapHub<CarHub>("/carhub");
             });
+        }
+
+        public static void OnChange(object sender, SqlNotificationEventArgs e)
+        {
+            Debug.WriteLine("ONCHANGE");
         }
     }
 }

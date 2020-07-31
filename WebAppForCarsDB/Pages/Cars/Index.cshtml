@@ -10,7 +10,7 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table" id="tablemain">
     <thead>
         <tr>
             <th>
@@ -28,27 +28,27 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model.CarProducts) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarModel.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Factory.Name)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+    <tbody id="tablebody">
+        @foreach (var item in Model.CarProducts)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CarModel.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Factory.Name)
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/cars.js"></script>
+
+

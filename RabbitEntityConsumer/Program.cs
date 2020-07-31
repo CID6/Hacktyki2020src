@@ -44,7 +44,15 @@ namespace RabbitEntityConsumer
                     }
                     catch (Exception e)
                     {
-                        string exMessage = e.InnerException.Message;
+                        string exMessage = "";
+                        if (e.InnerException!=null)
+                        {
+                            exMessage = e.InnerException.Message; 
+                        }
+                        else
+                        {
+                            exMessage = e.Message;
+                        }
                         Console.WriteLine(" [.] " + exMessage);
                         response = "An error has occured: " + exMessage;
                     }

@@ -16,12 +16,12 @@ namespace WebAppForCarsDB.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<UserContext>(options =>
+                services.AddDbContext<WebAppForCarsDBContext>(options =>
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("UserContextConnection")));
 
                 services.AddDefaultIdentity<WebAppForCarsDBUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<UserContext>();
+                    .AddEntityFrameworkStores<WebAppForCarsDBContext>();
             });
         }
     }

@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitEntityConsumer", "Rab
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitProducer", "RabbitProducer\RabbitProducer.csproj", "{E60C46CF-9799-462C-8FCA-69E59F13584C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppForCarsDB", "WebAppForCarsDB\WebAppForCarsDB.csproj", "{EECE913A-3F3C-4F34-904E-B8D69C3A7AEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppForCarsDB", "WebAppForCarsDB\WebAppForCarsDB.csproj", "{EECE913A-3F3C-4F34-904E-B8D69C3A7AEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

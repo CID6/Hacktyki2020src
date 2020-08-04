@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Policy;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
@@ -15,6 +16,7 @@ using WebAppForCarsDB.Hubs;
 
 namespace WebAppForCarsDB.Pages.Cars
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly RabbitEntityConsumer.Models.CarsDBContext _context;
@@ -76,6 +78,7 @@ namespace WebAppForCarsDB.Pages.Cars
                 .Include(c => c.Factory).ToListAsync();
         }
 
+        //tbf
         void OnDependencyChangeWEntity(object sender, SqlNotificationEventArgs e)
         {
             dependency.OnChange -= OnDependencyChangeWEntity;

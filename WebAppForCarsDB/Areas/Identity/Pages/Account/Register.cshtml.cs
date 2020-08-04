@@ -47,6 +47,11 @@ namespace WebAppForCarsDB.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Nickname")]
+            public string Nickname { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -75,7 +80,7 @@ namespace WebAppForCarsDB.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new WebAppForCarsDBUser { UserName = Input.Email, Email = Input.Email };
+                var user = new WebAppForCarsDBUser { UserName = Input.Nickname, Email = Input.Email };
                 IdentityResult result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RabbitEntityConsumer.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAppForCarsDB.Pages.Cars
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly RabbitEntityConsumer.Models.CarsDBContext _context;

@@ -34,6 +34,11 @@ namespace WebAppForCarsDB.Services
         {
             dependencyEvent = action;
 
+
+            if (dependencyReader!=null)
+            {
+                dependencyReader.Close(); 
+            }
             CreateNewDependency();
 
             return Task.FromResult(0);

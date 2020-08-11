@@ -55,14 +55,16 @@ namespace WebAppForCarsDB.Pages.Cars
 
             SearchString = "";
 
-            SqlDependency.Stop("Data Source=(LocalDb)\\MSSQLLocalDB;Integrated Security=true;Database=CarsDB;");
-            EstablishConnection();
+            _sqlDependencyManager.SetAction(OnDependencyChangeInManager);
+
+            //SqlDependency.Stop("Data Source=(LocalDb)\\MSSQLLocalDB;Integrated Security=true;Database=CarsDB;");
+            //EstablishConnection();
 
 
-            if (dependency == null)
-            {
-                CreateNewDependency(); 
-            }
+            //if (dependency == null)
+            //{
+            //    CreateNewDependency(); 
+            //}
         }
 
         public void EstablishConnection()
@@ -158,11 +160,11 @@ namespace WebAppForCarsDB.Pages.Cars
         {
             _carHubContext.Clients.All.SendAsync("DropTable");
 
-
+            Debug.WriteLine("SearchString = " + SearchString);
             while (queryReader.Read())
             {
                 //Debug.WriteLine((queryReader["ModelName"] as string));
-                if ((queryReader["ModelName"] as string).Contains(SearchString))
+                if ((queryReader["ModelName"] as string).ToUpper().Contains(SearchString.ToUpper()))
                 {
                     _carHubContext.Clients.All.SendAsync("UpdateCars", queryReader["Year"], queryReader["VIN"], queryReader["ModelName"], queryReader["FactoryName"]);
                     Debug.WriteLine(String.Format("{0}, {1}, {2}, {3}", queryReader["Year"], queryReader["VIN"], queryReader["ModelName"], queryReader["FactoryName"]));

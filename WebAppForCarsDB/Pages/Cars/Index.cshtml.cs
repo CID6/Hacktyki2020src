@@ -172,5 +172,6 @@ namespace WebAppForCarsDB.Pages.Cars
             }
             queryReader.Close();
         }
+
     }
 }

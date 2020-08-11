@@ -1,8 +1,12 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using RabbitEntityConsumer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebAppForCarsDB.Services
@@ -18,6 +22,10 @@ namespace WebAppForCarsDB.Services
         private SqlCommand queryCommand;
         private SqlDataReader queryReader;
 
+        public string SearchString { get; set; }
+
+        private System.Timers.Timer timer;
+
         const string queryString = "select Year, VIN, CarModels.Name as ModelName, CarFactories.Name as FactoryName from [dbo].CarProducts" + "\n" +
             "inner join [dbo].CarModels on CarModelId = [dbo].CarModels.Id" + "\n" +
             "inner join [dbo].CarFactories on FactoryId = [dbo].CarFactories.Id";
@@ -25,9 +33,8 @@ namespace WebAppForCarsDB.Services
         public SqlDependencyManager(ILogger<SqlDependencyManager> logger)
         {
             _logger = logger;
-
-
             EstablishConnection();
+            StartTimer();
         }
 
         public Task SetAction(Action<SqlDataReader> action)
@@ -49,6 +56,13 @@ namespace WebAppForCarsDB.Services
             dependencyEvent = null;
 
             return Task.FromResult(0);
+        }
+
+        public void StartTimer() 
+        {
+            timer = new System.Timers.Timer(1000 * 60 * 5);
+            timer.Elapsed += HandleTimerEvent;
+            timer.Start();
         }
 
         public Task WriteMessage(string message)
@@ -83,6 +97,16 @@ namespace WebAppForCarsDB.Services
             CreateNewDependency();
         }
 
+        private void HandleTimerEvent(object sender, EventArgs e)
+        {
+            queryCommand = new SqlCommand(queryString, sqlConnection);
+            _logger.LogInformation("Timer");
+
+            dependencyReader.Close();
+            queryReader = queryCommand.ExecuteReader();
+            dependencyEvent(queryReader);
+        }
+
         public void CreateNewDependency()
         {
             dependencyCommand = new SqlCommand("SELECT Year FROM [dbo].CarProducts", sqlConnection);
@@ -91,6 +115,7 @@ namespace WebAppForCarsDB.Services
 
             dependencyReader = dependencyCommand.ExecuteReader();
         }
+
 
     }
 }

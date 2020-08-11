@@ -16,6 +16,8 @@ using Microsoft.Data.SqlClient;
 using System.Diagnostics;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using WebAppForCarsDB.Services;
 
 namespace WebAppForCarsDB
 {
@@ -41,6 +43,8 @@ namespace WebAppForCarsDB
 
             services.AddDbContext<CarsDBContext>(options =>
                     options.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Integrated Security=true;Database=CarsDB;"));
+
+            services.AddSingleton<ISqlDependencyManager, SqlDependencyManager>();
 
             services.Configure<IdentityOptions>(options =>
             {

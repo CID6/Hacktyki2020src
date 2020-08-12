@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using RabbitEntityConsumer.Models;
+using EFCarsDB.Models;
+using EFCarsDB.Data;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WebAppForCarsDB.Pages.Cars
@@ -13,9 +14,9 @@ namespace WebAppForCarsDB.Pages.Cars
     [Authorize]
     public class CreateModel : PageModel
     {
-        private readonly RabbitEntityConsumer.Models.CarsDBContext _context;
+        private readonly CarsDBContext _context;
 
-        public CreateModel(RabbitEntityConsumer.Models.CarsDBContext context)
+        public CreateModel(CarsDBContext context)
         {
             _context = context;
         }

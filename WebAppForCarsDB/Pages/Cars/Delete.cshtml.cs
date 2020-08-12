@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using RabbitEntityConsumer.Models;
+using EFCarsDB.Data;
+using EFCarsDB.Models;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WebAppForCarsDB.Pages.Cars
@@ -13,9 +14,9 @@ namespace WebAppForCarsDB.Pages.Cars
     [Authorize]
     public class DeleteModel : PageModel
     {
-        private readonly RabbitEntityConsumer.Models.CarsDBContext _context;
+        private readonly CarsDBContext _context;
 
-        public DeleteModel(RabbitEntityConsumer.Models.CarsDBContext context)
+        public DeleteModel(CarsDBContext context)
         {
             _context = context;
         }

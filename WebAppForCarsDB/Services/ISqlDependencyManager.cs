@@ -1,5 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
-using RabbitEntityConsumer.Models;
+using EFCarsDB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

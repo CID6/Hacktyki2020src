@@ -10,13 +10,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebAppForCarsDB.Hubs;
 using Microsoft.EntityFrameworkCore;
-using RabbitEntityConsumer.Models;
+using EFCarsDB.Models;
 using Microsoft.Data.SqlClient;
 using System.Diagnostics;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using WebAppForCarsDB.Services;
+using EFCarsDB.Data;
 
 namespace WebAppForCarsDB
 {

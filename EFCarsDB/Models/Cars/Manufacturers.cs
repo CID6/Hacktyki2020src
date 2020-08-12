@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitEntityConsumer.Models
+namespace EFCarsDB.Models
 {
-    public partial class Cities
+    public partial class Manufacturers
     {
-        public Cities()
+        public Manufacturers()
         {
             CarFactories = new HashSet<CarFactories>();
+            CarModels = new HashSet<CarModels>();
         }
 
         public int Id { get; set; }
@@ -16,5 +17,6 @@ namespace RabbitEntityConsumer.Models
 
         public virtual Countries Country { get; set; }
         public virtual ICollection<CarFactories> CarFactories { get; set; }
+        public virtual ICollection<CarModels> CarModels { get; set; }
     }
 }

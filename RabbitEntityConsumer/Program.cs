@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Internal;
-using RabbitEntityConsumer.Models;
+using EFCarsDB.Models;
+using EFCarsDB.Data;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;

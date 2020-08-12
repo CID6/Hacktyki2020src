@@ -1,8 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using EFCarsDB.Models;
 
-namespace RabbitEntityConsumer.Models
+namespace EFCarsDB.Data
 {
     public partial class CarsDBContext : DbContext
     {

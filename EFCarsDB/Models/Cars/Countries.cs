@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitEntityConsumer.Models
+namespace EFCarsDB.Models
 {
     public partial class Countries
     {

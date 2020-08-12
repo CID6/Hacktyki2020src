@@ -5,10 +5,6 @@
     <UserSecretsId>e642cea9-0b1b-48c0-8e75-35a71a9d1302</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Migrations\20200730122931_NameChange.cs" />
-    <Compile Remove="Migrations\20200730122931_NameChange.Designer.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.6" />

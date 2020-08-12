@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using RabbitEntityConsumer.Models;
+using EFCarsDB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

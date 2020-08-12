@@ -12,7 +12,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using RabbitEntityConsumer.Models;
+using EFCarsDB.Models;
+using EFCarsDB.Data;
 using RabbitMQ.Client.Events;
 using WebAppForCarsDB.Hubs;
 using WebAppForCarsDB.Services;
@@ -22,7 +23,7 @@ namespace WebAppForCarsDB.Pages.Cars
     [Authorize]
     public class IndexModel : PageModel
     {
-        private readonly RabbitEntityConsumer.Models.CarsDBContext _context;
+        private readonly CarsDBContext _context;
         private readonly IHubContext<CarHub> _carHubContext;
         private readonly ISqlDependencyManager _sqlDependencyManager;
 
@@ -47,7 +48,7 @@ namespace WebAppForCarsDB.Pages.Cars
         public string CarModel { get; set; }
 
 
-        public IndexModel(RabbitEntityConsumer.Models.CarsDBContext context, IHubContext<CarHub> hubContext, ISqlDependencyManager sqlDependencyManager)
+        public IndexModel(CarsDBContext context, IHubContext<CarHub> hubContext, ISqlDependencyManager sqlDependencyManager)
         {
             _context = context;
             _carHubContext = hubContext;

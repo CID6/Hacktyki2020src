@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using WebAppForCarsDB.Data;
-using WebAppForCarsDB.Models;
+using EFCarsDB.Data;
+using EFCarsDB.Models;
 
 namespace WebAppForCarsDB.Pages.Movies
 {
     public class EditModel : PageModel
     {
-        private readonly WebAppForCarsDB.Data.WebAppForCarsDBContext _context;
+        private readonly EFCarsDB.Data.WebAppForCarsDBContext _context;
 
-        public EditModel(WebAppForCarsDB.Data.WebAppForCarsDBContext context)
+        public EditModel(EFCarsDB.Data.WebAppForCarsDBContext context)
         {
             _context = context;
         }

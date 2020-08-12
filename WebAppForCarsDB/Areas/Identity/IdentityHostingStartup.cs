@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebAppForCarsDB.Areas.Identity.Data;
-using WebAppForCarsDB.Data;
+using EFCarsDB.Areas.Identity.Data;
+using EFCarsDB.Data;
 
 [assembly: HostingStartup(typeof(WebAppForCarsDB.Areas.Identity.IdentityHostingStartup))]
 namespace WebAppForCarsDB.Areas.Identity

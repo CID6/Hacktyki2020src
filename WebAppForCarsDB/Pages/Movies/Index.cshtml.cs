@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using WebAppForCarsDB.Data;
-using WebAppForCarsDB.Models;
+using EFCarsDB.Data;
+using EFCarsDB.Models;
 
 namespace WebAppForCarsDB.Pages.Movies
 {
     public class IndexModel : PageModel
     {
-        private readonly WebAppForCarsDB.Data.WebAppForCarsDBContext _context;
+        private readonly EFCarsDB.Data.WebAppForCarsDBContext _context;
 
-        public IndexModel(WebAppForCarsDB.Data.WebAppForCarsDBContext context)
+        public IndexModel(EFCarsDB.Data.WebAppForCarsDBContext context)
         {
             _context = context;
         }

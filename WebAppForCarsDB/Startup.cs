@@ -10,7 +10,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebAppForCarsDB.Hubs;
 using Microsoft.EntityFrameworkCore;
-using WebAppForCarsDB.Data;
 using RabbitEntityConsumer.Models;
 using Microsoft.Data.SqlClient;
 using System.Diagnostics;
@@ -38,7 +37,7 @@ namespace WebAppForCarsDB
             services.AddRazorPages();
             services.AddSignalR();
 
-            services.AddDbContext<WebAppForCarsDBContext>(options =>
+            services.AddDbContext<EFCarsDB.Data.WebAppForCarsDBContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("WebAppForCarsDBContext")));
 
             services.AddDbContext<CarsDBContext>(options =>

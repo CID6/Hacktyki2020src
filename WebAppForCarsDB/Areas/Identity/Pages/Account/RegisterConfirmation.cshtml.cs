@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using WebAppForCarsDB.Areas.Identity.Data;
+using EFCarsDB.Areas.Identity.Data;
 
 namespace WebAppForCarsDB.Areas.Identity.Pages.Account
 {

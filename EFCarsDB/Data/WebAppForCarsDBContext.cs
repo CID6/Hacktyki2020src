@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EFCarsDB.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using WebAppForCarsDB.Areas.Identity.Data;
-using WebAppForCarsDB.Models;
 
-namespace WebAppForCarsDB.Data
+namespace EFCarsDB.Data
 {
     public class WebAppForCarsDBContext : IdentityDbContext<WebAppForCarsDBUser>
     {
@@ -16,7 +15,7 @@ namespace WebAppForCarsDB.Data
         {
         }
 
-        public DbSet<WebAppForCarsDB.Models.Movie> Movie { get; set; }
+        public DbSet<EFCarsDB.Models.Movie> Movie { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

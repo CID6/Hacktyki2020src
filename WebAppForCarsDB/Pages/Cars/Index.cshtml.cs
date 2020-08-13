@@ -14,7 +14,6 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using EFCarsDB.Models;
 using EFCarsDB.Data;
-using RabbitMQ.Client.Events;
 using WebAppForCarsDB.Hubs;
 using WebAppForCarsDB.Services;
 

@@ -56,8 +56,8 @@ namespace WebAppForCarsDB.Pages.Movies
             }
 
 
-            await AddMovieToFirebaseAsync(Movie);
-            Debug.WriteLine("Added to firebase successfully");
+            //await AddMovieToFirebaseAsync(Movie);
+            //Debug.WriteLine("Added to firebase successfully");
 
 
             return RedirectToPage("./Index");

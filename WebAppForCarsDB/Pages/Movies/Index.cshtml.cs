@@ -50,11 +50,14 @@ namespace WebAppForCarsDB.Pages.Movies
             FirebaseResponse response = await client.GetAsync("/Movies");
             dynamic data = JsonConvert.DeserializeObject<dynamic>(response.Body);
 
-            foreach(var item in data)
+            if (data!=null)
             {
-                FirebaseMovie deserializedMovie = JsonConvert.DeserializeObject<FirebaseMovie>(((JProperty)item).Value.ToString());
-                Movie.Add(deserializedMovie);
-                Debug.WriteLine(deserializedMovie.FirebaseID);
+                foreach (var item in data)
+                {
+                    FirebaseMovie deserializedMovie = JsonConvert.DeserializeObject<FirebaseMovie>(((JProperty)item).Value.ToString());
+                    Movie.Add(deserializedMovie);
+                    Debug.WriteLine(deserializedMovie.FirebaseID);
+                } 
             }
         }
 

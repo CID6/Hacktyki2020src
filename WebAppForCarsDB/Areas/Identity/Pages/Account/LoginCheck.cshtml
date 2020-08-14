@@ -1,0 +1,11 @@
+﻿@page
+@model WebAppForCarsDB.Areas.Identity.Pages.Account.LoginCheckModel
+@{
+    ViewData["Title"] = "Check login";
+}
+
+    <header>
+        <h1>@ViewData["Title"]</h1>
+        <p>Check here if you are logged in or not:</p>
+        @Html.DisplayFor(options => Model.Authenticated)
+    </header>

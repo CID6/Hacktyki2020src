@@ -8,11 +8,26 @@ namespace XMLExportDC
 {
     public class DeserializedElement
     {
+        /// <summary>
+        /// XElement object of the deserialized element.
+        /// </summary>
         private XElement Element { get; set; }
 
+        /// <summary>
+        /// Element name
+        /// </summary>
         public string Name { get; private set; }
+        /// <summary>
+        /// Element children
+        /// </summary>
         public List<DeserializedElement> Children { get; private set; }
+        /// <summary>
+        /// Element value
+        /// </summary>
         public string Value { get; private set; }
+        /// <summary>
+        /// Element attributes
+        /// </summary>
         public Dictionary<string, string> Attributes { get; private set; }
 
         public bool HasSubchildren
@@ -23,6 +38,10 @@ namespace XMLExportDC
             }
         }
 
+        /// <summary>
+        /// Deserializes the given XElement
+        /// </summary>
+        /// <param name="element"></param>
         public DeserializedElement(XElement element)
         {
             Element = element;
@@ -33,6 +52,13 @@ namespace XMLExportDC
             SetChildren();
         }
 
+        /// <summary>
+        /// Creates a new DeserializedElement with the given params.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="attributes"></param>
+        /// <param name="value"></param>
+        /// <param name="children"></param>
         public DeserializedElement(string name = null, Dictionary<string, string> attributes = null, string value = null, List<DeserializedElement> children = null)
         {
             Name = name;
@@ -73,6 +99,9 @@ namespace XMLExportDC
             }
         }
 
+        /// <summary>
+        /// Turns attributes of this element into children elements.
+        /// </summary>
         public void TurnAttributesIntoChildren()
         {
             foreach (var attribute in Attributes)
@@ -83,6 +112,9 @@ namespace XMLExportDC
             Attributes.Clear();
         }
 
+        /// <summary>
+        /// Turns value of this element into a child element.
+        /// </summary>
         public void TurnValueIntoChild()
         {
             if (Value != null || Value != "")
@@ -92,6 +124,11 @@ namespace XMLExportDC
             }
         }
 
+        /// <summary>
+        /// Removes unnecessary characters from the value
+        /// </summary>
+        /// <param name="attributeValue">Unnormalized value</param>
+        /// <returns>Normalized value string</returns>
         protected string NormalizeAttributeValue(string attributeValue)
         {
             string returnString = attributeValue.Replace("\n", "");
@@ -101,6 +138,11 @@ namespace XMLExportDC
             return returnString;
         }
 
+        /// <summary>
+        /// Finds children of this element with the given element name.
+        /// </summary>
+        /// <param name="elementName">The given element name.</param>
+        /// <returns>Collection of elements with the given element name</returns>
         public IEnumerable<DeserializedElement> FindChildren(string elementName)
         {
             List<DeserializedElement> elementList = new List<DeserializedElement>();

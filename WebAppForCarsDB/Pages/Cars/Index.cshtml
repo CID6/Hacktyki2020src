@@ -1,0 +1,62 @@
+﻿@page 
+@model WebAppForCarsDB.Pages.Cars.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<form>
+    <p>
+        Model: <input type="text" asp-for="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<table class="table" id="tablemain">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CarProducts[0].Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CarProducts[0].Vin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CarProducts[0].CarModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CarProducts[0].Factory)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="tablebody">
+        @foreach (var item in Model.CarProducts)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CarModel.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Factory.Name)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/cars.js"></script>
+
+

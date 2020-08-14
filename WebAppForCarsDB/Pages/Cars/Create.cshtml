@@ -1,0 +1,46 @@
+﻿@page
+@model WebAppForCarsDB.Pages.Cars.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>CarProducts</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CarProducts.Year" class="control-label"></label>
+                <input asp-for="CarProducts.Year" class="form-control" />
+                <span asp-validation-for="CarProducts.Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CarProducts.Vin" class="control-label"></label>
+                <input asp-for="CarProducts.Vin" class="form-control" />
+                <span asp-validation-for="CarProducts.Vin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CarProducts.CarModelId" class="control-label"></label>
+                <select asp-for="CarProducts.CarModelId" class="form-control" asp-items="ViewBag.CarModelId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CarProducts.FactoryId" class="control-label"></label>
+                <select asp-for="CarProducts.FactoryId" class="form-control" asp-items="ViewBag.FactoryId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

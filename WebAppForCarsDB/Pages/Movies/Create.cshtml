@@ -1,0 +1,63 @@
+﻿@page
+@model WebAppForCarsDB.Pages.Movies.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Movie</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" id="createForm" onsubmit="return parseForm()">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Movie.Title" class="control-label"></label>
+                <input asp-for="Movie.Title" class="form-control" />
+                <span asp-validation-for="Movie.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Movie.ReleaseDate" class="control-label"></label>
+                <input asp-for="Movie.ReleaseDate" class="form-control" />
+                <span asp-validation-for="Movie.ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Movie.Genre" class="control-label"></label>
+                <input asp-for="Movie.Genre" class="form-control" />
+                <span asp-validation-for="Movie.Genre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Movie.Price" class="control-label"></label>
+                <input asp-for="Movie.Price" class="form-control" />
+                <span asp-validation-for="Movie.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" id="createMovieButton" value="Create" class="btn btn-primary" OnClientClick="sendData()" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-analytics.js"></script>
+
+
+<script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-database.js"></script>
+<script src="~/js/movieCreate.js"></script>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

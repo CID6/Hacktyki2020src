@@ -8,6 +8,10 @@ using System.Xml.Linq;
 
 namespace XMLExportDC
 {
+
+    /// <summary>
+    /// Builds an XSLT file that can transfrom XML file to CSV.
+    /// </summary>
     public class XSLConstructor
     {
         public string XSLTemplate { get; set; } = null;
@@ -22,21 +26,28 @@ namespace XMLExportDC
         const string commaDefinition = "<xsl:text>,</xsl:text>";
         const string endl = "\n";
 
+        /// <summary>
+        /// Creates the object and sets the column names
+        /// </summary>
+        /// <param name="columns"></param>
         public XSLConstructor(string[] columns)
         {
             Columns = columns;
         }
 
+        /// <summary>
+        /// Creates the object and sets the column names
+        /// </summary>
+        /// <param name="columns"></param>
         public XSLConstructor(IEnumerable<string> columns)
         {
             Columns = columns.ToArray();
         }
 
-        public void ReadXSLTemplate(string path)
-        {
-            XSLTemplate = File.ReadAllText(path);
-        }
-
+        /// <summary>
+        /// Reads the special XSL template file.
+        /// </summary>
+        /// <param name="path">The input stream for the embedded file</param>
         public void ReadXSLTemplate(Stream fileStream)
         {
             using (StreamReader sr = new StreamReader(fileStream))
@@ -45,6 +56,9 @@ namespace XMLExportDC
             }
         }
 
+        /// <summary>
+        /// Builds the template with the given columns
+        /// </summary>
         public void BuildTemplate()
         {
             if (XSLTemplate != null)
@@ -54,6 +68,10 @@ namespace XMLExportDC
             }
         }
 
+        /// <summary>
+        /// Inserts column definitions into the template.
+        /// </summary>
+        /// <param name="fileString"></param>
         private void BuildColumnDefinition(string fileString)
         {
             string columnDefinition = "";
@@ -71,6 +89,10 @@ namespace XMLExportDC
             XSLTemplate = fileString.Replace(tempColumnDefinition, columnDefinition);
         }
 
+        /// <summary>
+        /// Inserts row definitions into the template.
+        /// </summary>
+        /// <param name="fileString"></param>
         private void BuildRowDefinition(string fileString)
         {
             string rowDefinition = "";
@@ -88,6 +110,10 @@ namespace XMLExportDC
             XSLTemplate = fileString.Replace(tempRowDefinition, rowDefinition);
         }
 
+        /// <summary>
+        /// Saves the created template to a path.
+        /// </summary>
+        /// <param name="path"></param>
         public void Save(string path)
         {
             if (XSLTemplate != null)

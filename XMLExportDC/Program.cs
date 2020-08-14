@@ -22,6 +22,7 @@ namespace XMLExportDC
         static int Main(string[] args)
         {
 
+
             int retArgs = CheckArgsValidity(args);
             if (retArgs != 0) return retArgs;
 

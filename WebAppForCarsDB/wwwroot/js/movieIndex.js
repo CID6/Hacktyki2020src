@@ -15,21 +15,32 @@ firebase.initializeApp(firebaseConfig);
 
 //create reference
 //ref - root
-const dfRefObject = firebase.database().ref().child('movies/');
+//const dfRefObject = GetReference("Horror");
+const references = [];
+
+if (document.getElementById("horror").checked) references.push(GetReference("Horror"));
+if (document.getElementById("action").checked) references.push(GetReference("Action"));
+if (document.getElementById("comedy").checked) references.push(GetReference("Comedy"));
+if (document.getElementById("scifi").checked) references.push(GetReference("Scifi"));
+if (document.getElementById("documentary").checked) references.push(GetReference("Documentary"));
+
 
 //synchronize obj change
 //snap - data snapshot, returns keyname and ways to iterate children
 //dfRefObject.once('value', snap => parseSnap(snap.val()));
-dfRefObject.on("child_added", snap => parseNewRow(snap.val(), snap.key));
-dfRefObject.on("child_changed", snap => parseUpdatedRow(snap.val(), snap.key));
-dfRefObject.on("child_removed", snap => deleteRow(snap.key));
+
+for (var i = 0; i < references.length; i++) {
+    references[i].on("child_added", snap => parseNewRow(snap.val(), snap.key));
+    references[i].on("child_changed", snap => parseUpdatedRow(snap.val(), snap.key));
+    references[i].on("child_removed", snap => deleteRow(snap.key));
+}
+
+
 
 
 
 function parseNewRow(snapValue, snapKey) {
     var child = snapValue;
-    //console.log(snapValue);
-    //console.log(snapKey);
     createRow(child["title"], child["release_date"], child["genre"], child["price"], snapKey);
 }
 
@@ -75,4 +86,9 @@ function deleteRow(movieId) {
     var rowToDeleteIndex = rowToDelete.rowIndex;
     var parentTable = document.getElementById("mainTable");
     parentTable.deleteRow(rowToDeleteIndex);
+}
+
+function GetReference(name) {
+    reference = firebase.database().ref().child("movies/" + name);
+    return reference;
 }

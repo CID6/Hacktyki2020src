@@ -1,13 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Internal;
+﻿using EFCarsDB.Data;
 using EFCarsDB.Models;
-using EFCarsDB.Data;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xml.Linq;
 
 namespace RabbitEntityConsumer
 {
@@ -46,9 +44,9 @@ namespace RabbitEntityConsumer
                     catch (Exception e)
                     {
                         string exMessage = "";
-                        if (e.InnerException!=null)
+                        if (e.InnerException != null)
                         {
-                            exMessage = e.InnerException.Message; 
+                            exMessage = e.InnerException.Message;
                         }
                         else
                         {
@@ -68,7 +66,7 @@ namespace RabbitEntityConsumer
                 Console.WriteLine(" Type [exit] to exit.");
                 Console.ReadLine();
 
-                
+
             }
         }
 
@@ -109,7 +107,7 @@ namespace RabbitEntityConsumer
             db.SaveChanges();
 
         }
-        
+
         static void AddCarProducts(CarsDBContext context, DefaultDeserializer deserializer)
         {
             var carModelsQuery = context.CarModels;

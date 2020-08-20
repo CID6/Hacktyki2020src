@@ -1,10 +1,11 @@
-﻿using System;
+﻿using EFCarsDB.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using EFCarsDB.Models;
 
 namespace EFCarsDB.Data
 {
+    /// <summary>
+    /// This is the context class for the CARS database used in RabbitMQ project and Webapp project w/ SignalR
+    /// </summary>
     public partial class CarsDBContext : DbContext
     {
         public CarsDBContext()

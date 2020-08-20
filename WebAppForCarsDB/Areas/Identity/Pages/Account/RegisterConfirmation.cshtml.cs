@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EFCarsDB.Areas.Identity.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using EFCarsDB.Areas.Identity.Data;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace WebAppForCarsDB.Areas.Identity.Pages.Account
 {

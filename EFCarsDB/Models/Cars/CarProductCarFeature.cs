@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace EFCarsDB.Models
+﻿namespace EFCarsDB.Models
 {
     public partial class CarProductCarFeature
     {

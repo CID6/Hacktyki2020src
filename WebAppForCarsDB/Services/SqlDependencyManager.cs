@@ -1,12 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using EFCarsDB.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebAppForCarsDB.Services
@@ -42,9 +36,9 @@ namespace WebAppForCarsDB.Services
             dependencyEvent = action;
 
 
-            if (dependencyReader!=null)
+            if (dependencyReader != null)
             {
-                dependencyReader.Close(); 
+                dependencyReader.Close();
             }
             CreateNewDependency();
 
@@ -58,18 +52,11 @@ namespace WebAppForCarsDB.Services
             return Task.FromResult(0);
         }
 
-        public void StartTimer() 
+        public void StartTimer()
         {
             timer = new System.Timers.Timer(1000 * 60 * 5);
             timer.Elapsed += HandleTimerEvent;
             timer.Start();
-        }
-
-        public Task WriteMessage(string message)
-        {
-            _logger.LogInformation("Writemessage called. Message: {MESSAGE}", message);
-
-            return Task.FromResult(0);
         }
 
         private void EstablishConnection()

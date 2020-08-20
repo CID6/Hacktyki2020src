@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EFCarsDB.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using WebAppForCarsDB.Hubs;
-using Microsoft.EntityFrameworkCore;
-using EFCarsDB.Models;
-using Microsoft.Data.SqlClient;
-using System.Diagnostics;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using WebAppForCarsDB.Services;
-using EFCarsDB.Data;
 
 namespace WebAppForCarsDB
 {
@@ -31,11 +22,8 @@ namespace WebAppForCarsDB
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WebAppForCarsDBContext>();
-
             services.AddRazorPages();
             services.AddSignalR();
 
@@ -46,6 +34,7 @@ namespace WebAppForCarsDB
                     options.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Integrated Security=true;Database=CarsDB;"));
 
             services.AddSingleton<ISqlDependencyManager, SqlDependencyManager>();
+            services.AddSingleton(typeof(CarHub));
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -91,7 +80,6 @@ namespace WebAppForCarsDB
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -106,15 +94,8 @@ namespace WebAppForCarsDB
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                endpoints.MapHub<ChatHub>("/chathub");
-                endpoints.MapHub<MovieHub>("/moviehub");
                 endpoints.MapHub<CarHub>("/carhub");
             });
-        }
-
-        public static void OnChange(object sender, SqlNotificationEventArgs e)
-        {
-            Debug.WriteLine("ONCHANGE");
         }
     }
 }

@@ -2,42 +2,41 @@
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Text;
 
 namespace RabbitProducer
 {
     public class RpcClient
     {
-        private readonly IConnection connection;
-        private readonly IModel channel;
-        private readonly string replyQueueName;
-        private readonly EventingBasicConsumer consumer;
-        private readonly BlockingCollection<string> respQueue = new BlockingCollection<string>();
-        private readonly IBasicProperties props;
+        private readonly IConnection _connection;
+        private readonly IModel _channel;
+        private readonly string _replyQueueName;
+        private readonly EventingBasicConsumer _consumer;
+        private readonly BlockingCollection<string> _respQueue = new BlockingCollection<string>();
+        private readonly IBasicProperties _props;
 
 
         public RpcClient()
         {
             ConnectionFactory factory = new ConnectionFactory() { HostName = "localhost" };
 
-            connection = factory.CreateConnection();
-            channel = connection.CreateModel();
-            replyQueueName = channel.QueueDeclare().QueueName;
-            consumer = new EventingBasicConsumer(channel);
+            _connection = factory.CreateConnection();
+            _channel = _connection.CreateModel();
+            _replyQueueName = _channel.QueueDeclare().QueueName;
+            _consumer = new EventingBasicConsumer(_channel);
 
-            props = channel.CreateBasicProperties();
+            _props = _channel.CreateBasicProperties();
             string correlationId = Guid.NewGuid().ToString();
-            props.CorrelationId = correlationId;
-            props.ReplyTo = replyQueueName;
+            _props.CorrelationId = correlationId;
+            _props.ReplyTo = _replyQueueName;
 
-            consumer.Received += (model, ea) =>
+            _consumer.Received += (model, ea) =>
             {
                 byte[] body = ea.Body.ToArray();
                 string response = Encoding.UTF8.GetString(body);
-                if(ea.BasicProperties.CorrelationId == correlationId)
+                if (ea.BasicProperties.CorrelationId == correlationId)
                 {
-                    respQueue.Add(response);
+                    _respQueue.Add(response);
                 }
             };
         }
@@ -45,23 +44,23 @@ namespace RabbitProducer
         public string Call(string message)
         {
             var messageBytes = Encoding.UTF8.GetBytes(message);
-            channel.BasicPublish(
+            _channel.BasicPublish(
                 exchange: "",
                 routingKey: "rpc_queue",
-                basicProperties: props,
+                basicProperties: _props,
                 body: messageBytes);
 
-            channel.BasicConsume(
-                consumer: consumer,
-                queue: replyQueueName,
+            _channel.BasicConsume(
+                consumer: _consumer,
+                queue: _replyQueueName,
                 autoAck: true);
 
-            return respQueue.Take();
+            return _respQueue.Take();
         }
 
         public void Close()
         {
-            connection.Close();
+            _connection.Close();
         }
     }
 }

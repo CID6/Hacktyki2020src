@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using EFCarsDB.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using EFCarsDB.Areas.Identity.Data;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace WebAppForCarsDB.Areas.Identity.Pages.Account
 {
@@ -22,7 +19,7 @@ namespace WebAppForCarsDB.Areas.Identity.Pages.Account
         private readonly SignInManager<WebAppForCarsDBUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<WebAppForCarsDBUser> signInManager, 
+        public LoginModel(SignInManager<WebAppForCarsDBUser> signInManager,
             ILogger<LoginModel> logger,
             UserManager<WebAppForCarsDBUser> userManager)
         {
@@ -87,7 +84,7 @@ namespace WebAppForCarsDB.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User logged in.");
                     _logger.LogInformation(User.Identity.IsAuthenticated.ToString());
-                    
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

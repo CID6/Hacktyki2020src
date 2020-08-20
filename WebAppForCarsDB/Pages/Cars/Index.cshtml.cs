@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Security.Policy;
-using System.Threading.Tasks;
+﻿using EFCarsDB.Data;
+using EFCarsDB.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,8 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using EFCarsDB.Models;
-using EFCarsDB.Data;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using WebAppForCarsDB.Hubs;
 using WebAppForCarsDB.Services;
 
@@ -25,150 +23,80 @@ namespace WebAppForCarsDB.Pages.Cars
         private readonly CarsDBContext _context;
         private readonly IHubContext<CarHub> _carHubContext;
         private readonly ISqlDependencyManager _sqlDependencyManager;
-
-        SqlDataReader dependencyReader;
-        SqlConnection connection;
-        SqlCommand dependencyCommand;
-        SqlDependency dependency;
-        SqlDataReader queryReader;
-        SqlCommand queryCommand;
-
-
-        const string queryString = "select Year, VIN, CarModels.Name as ModelName, CarFactories.Name as FactoryName from [dbo].CarProducts" + "\n" +
-            "inner join [dbo].CarModels on CarModelId = [dbo].CarModels.Id" + "\n" +
-            "inner join [dbo].CarFactories on FactoryId = [dbo].CarFactories.Id";
+        private readonly CarHub _carHub;
 
         public IList<CarProducts> CarProducts { get; set; }
         public string DateTimeString { get; set; }
+
         [BindProperty(SupportsGet = true)]
-        public string SearchString { get; set; }
+        public bool Astra { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public bool Vectra { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public bool Cruze { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public bool Almera { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public bool Epica { get; set; }
         public SelectList Models { get; set; }
         [BindProperty(SupportsGet = true)]
         public string CarModel { get; set; }
 
 
-        public IndexModel(CarsDBContext context, IHubContext<CarHub> hubContext, ISqlDependencyManager sqlDependencyManager)
+        public IndexModel(CarsDBContext context, IHubContext<CarHub> hubContext, ISqlDependencyManager sqlDependencyManager, CarHub carHubDI)
         {
             _context = context;
             _carHubContext = hubContext;
+            //all dependency based stuff is in dependency manager
             _sqlDependencyManager = sqlDependencyManager;
+            _carHub = carHubDI;
 
-            SearchString = "";
 
+            //only callback is added to the manager
             _sqlDependencyManager.SetAction(OnDependencyChangeInManager);
-
-            //SqlDependency.Stop("Data Source=(LocalDb)\\MSSQLLocalDB;Integrated Security=true;Database=CarsDB;");
-            //EstablishConnection();
-
-
-            //if (dependency == null)
-            //{
-            //    CreateNewDependency(); 
-            //}
         }
-
-        public void EstablishConnection()
-        {
-            connection = new SqlConnection();
-            connection.ConnectionString = "Data Source=(LocalDb)\\MSSQLLocalDB;Integrated Security=true;Database=CarsDB;";
-            connection.Open();
-
-
-            SqlDependency.Start("Data Source=(LocalDb)\\MSSQLLocalDB;Integrated Security=true;Database=CarsDB;");
-        }
-
-
-        public void CreateNewDependency()
-        {
-            dependencyCommand = new SqlCommand("SELECT Year FROM [dbo].CarProducts", connection);
-
-
-            dependency = new SqlDependency(dependencyCommand);
-
-            dependency.OnChange += OnDependencyChange;
-
-            
-
-            dependencyReader = dependencyCommand.ExecuteReader();
-        }
-
-
 
         public async Task OnGetAsync()
         {
-            await _sqlDependencyManager.WriteMessage("Message from OnGetAsync");
 
             var carProducts = from m in _context.CarProducts
                               select m;
 
-            if (!string.IsNullOrEmpty(SearchString))
-            {
-                carProducts = carProducts.Where(s => s.CarModel.Name.Contains(SearchString));
-            }
+            string astraString = (Astra) ? "Astra" : "";
+            string vectraString = (Vectra) ? "Vectra" : "";
+            string almeraString = (Almera) ? "Almera" : "";
+            string cruzeString = (Cruze) ? "Cruze" : "";
+            string epicaString = (Epica) ? "Epica" : "";
 
             CarProducts = await carProducts
                 .Include(c => c.CarModel)
-                .Include(c => c.Factory).ToListAsync();
-        }
+                .Include(c => c.Factory)
+                .Where(c => c.CarModel.Name == astraString || c.CarModel.Name == vectraString || c.CarModel.Name == almeraString || c.CarModel.Name == cruzeString || c.CarModel.Name == epicaString)
+                .ToListAsync();
 
-        //tbf
-        void OnDependencyChangeWEntity(object sender, SqlNotificationEventArgs e)
-        {
-            dependency.OnChange -= OnDependencyChangeWEntity;
-            dependencyReader.Close();
-            CreateNewDependency();
-
-            var carProductsQuery = _context.CarProducts;
-
-            _carHubContext.Clients.All.SendAsync("DropTable");
-            foreach (CarProducts product in carProductsQuery)
+            foreach (var car in CarProducts)
             {
-                _carHubContext.Clients.All.SendAsync("UpdateCars", product.Year, product.Vin, product.CarModel.Name, product.Factory.Name);
-                //Debug.WriteLine(String.Format("{0}, {1}, {2}, {3}", queryReader["Year"], queryReader["VIN"], queryReader["ModelName"], queryReader["FactoryName"]));
+                Debug.WriteLine(car.CarModel.Name);
             }
+
+            //foreach(var car in CarProductsList)
+            //{
+            //    await _carHubContext.Clients.Group(car.CarModel.Name).SendAsync("UpdateCars", car.Year, car.Vin, car.CarModel.Name, car.Factory.Name);
+            //    Debug.WriteLine(car.CarModel.Name);
+            //}
         }
 
 
-        void OnDependencyChange(object sender, SqlNotificationEventArgs e)
-        {
-            queryCommand = new SqlCommand(queryString, connection);
-
-            Debug.WriteLine(e.Info);
-            dependency.OnChange -= OnDependencyChange;
-            dependencyReader.Close();
-
-            queryReader = queryCommand.ExecuteReader();
-
-            _carHubContext.Clients.All.SendAsync("DropTable");
-
-
-            while (queryReader.Read())
-            {
-                //Debug.WriteLine((queryReader["ModelName"] as string));
-                if ((queryReader["ModelName"] as string).Contains(SearchString))
-                {
-                    _carHubContext.Clients.All.SendAsync("UpdateCars", queryReader["Year"], queryReader["VIN"], queryReader["ModelName"], queryReader["FactoryName"]);
-                    Debug.WriteLine(String.Format("{0}, {1}, {2}, {3}", queryReader["Year"], queryReader["VIN"], queryReader["ModelName"], queryReader["FactoryName"]));
-                }
-            }
-            queryReader.Close();
-
-            CreateNewDependency();
-        }
 
         void OnDependencyChangeInManager(SqlDataReader queryReader)
         {
             _carHubContext.Clients.All.SendAsync("DropTable");
 
-            Debug.WriteLine("SearchString = " + SearchString);
             while (queryReader.Read())
             {
-                //Debug.WriteLine((queryReader["ModelName"] as string));
-                if ((queryReader["ModelName"] as string).ToUpper().Contains(SearchString.ToUpper()))
-                {
-                    _carHubContext.Clients.All.SendAsync("UpdateCars", queryReader["Year"], queryReader["VIN"], queryReader["ModelName"], queryReader["FactoryName"]);
-                    Debug.WriteLine(String.Format("{0}, {1}, {2}, {3}", queryReader["Year"], queryReader["VIN"], queryReader["ModelName"], queryReader["FactoryName"]));
-                }
+                _carHubContext.Clients.Group(queryReader["ModelName"].ToString()).SendAsync("UpdateCars", queryReader["Year"], queryReader["VIN"], queryReader["ModelName"], queryReader["FactoryName"]);
+                //_carHubContext.Clients.All.SendAsync("UpdateCars", queryReader["Year"], queryReader["VIN"], queryReader["ModelName"], queryReader["FactoryName"]);
+                Debug.WriteLine(String.Format("{0}, {1}, {2}, {3}", queryReader["Year"], queryReader["VIN"], queryReader["ModelName"], queryReader["FactoryName"]));
             }
             queryReader.Close();
         }

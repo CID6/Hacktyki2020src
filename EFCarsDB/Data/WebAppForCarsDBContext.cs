@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EFCarsDB.Areas.Identity.Data;
+﻿using EFCarsDB.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFCarsDB.Data
 {
+    /// <summary>
+    /// This is the context class for the MOVIE database
+    /// </summary>
+    /// Not currently in use, replaced with firebase class
     public class WebAppForCarsDBContext : IdentityDbContext<WebAppForCarsDBUser>
     {
-        public WebAppForCarsDBContext (DbContextOptions<WebAppForCarsDBContext> options)
+        public WebAppForCarsDBContext(DbContextOptions<WebAppForCarsDBContext> options)
             : base(options)
         {
         }
-
-        public DbSet<EFCarsDB.Models.Movie> Movie { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -1,8 +1,5 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using RabbitMQ.Client;
-using System;
+﻿using System;
 using System.IO;
-using System.Text;
 
 namespace RabbitProducer
 {
@@ -20,8 +17,19 @@ namespace RabbitProducer
 
             var rpcClient = new RpcClient();
 
+            string fileText = "";
+            try
+            {
+                fileText = File.ReadAllText(args[0]);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Incorrect input file.");
+                return;
+            }
+
             Console.WriteLine(" [x] Sending file {0}", args[0]);
-            string response = rpcClient.Call(File.ReadAllText(args[0]));
+            string response = rpcClient.Call(fileText);
 
             Console.WriteLine(" [.] Got '{0}'", response);
             rpcClient.Close();

@@ -26,7 +26,7 @@ function parseForm() {
 }
 
 function writeMovie(title, genre, releaseDate, price) {
-	database.ref("movies/").push({
+	database.ref("movies/"+genre).push({
 		title: title,
 		genre: genre,
 		release_date: releaseDate,

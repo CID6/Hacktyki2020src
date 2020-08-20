@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace XMLExportDC
@@ -38,7 +36,7 @@ namespace XMLExportDC
             IEnumerable<DeserializedElement> deserializedElements = Find(elementName);
 
             XElement root = new XElement("Root");
-            foreach(var element in deserializedElements)
+            foreach (var element in deserializedElements)
             {
                 root.Add(SerializeElement(element));
             }
@@ -59,8 +57,8 @@ namespace XMLExportDC
         public XElement SerializeElement(DeserializedElement deserializedElement)
         {
             XElement element = new XElement(deserializedElement.Name);
-            
-            foreach(var attribute in deserializedElement.Attributes)
+
+            foreach (var attribute in deserializedElement.Attributes)
             {
                 element.SetAttributeValue(attribute.Key, attribute.Value);
             }
@@ -112,7 +110,7 @@ namespace XMLExportDC
         /// </summary>
         public void TurnAttributesIntoChildren()
         {
-            if(Root != null) TurnAttributesIntoChildren(Root);
+            if (Root != null) TurnAttributesIntoChildren(Root);
         }
 
         /// <summary>
@@ -135,7 +133,7 @@ namespace XMLExportDC
         {
             element.TurnAttributesIntoChildren();
 
-            foreach(var child in element.Children)
+            foreach (var child in element.Children)
             {
                 TurnAttributesIntoChildren(child);
             }
@@ -147,7 +145,7 @@ namespace XMLExportDC
         /// <param name="targetElement">Name of the given element</param>
         public void TurnValuesIntoChildren(string targetElement)
         {
-            foreach(var element in Find(targetElement))
+            foreach (var element in Find(targetElement))
             {
                 element.TurnValueIntoChild();
             }
@@ -156,8 +154,8 @@ namespace XMLExportDC
         private void TraverseTreeAndAddElementsByName(DeserializedElement element, List<DeserializedElement> list, string elementName)
         {
             if (element.Name == elementName) list.Add(element);
-            
-            foreach(var child in element.Children)
+
+            foreach (var child in element.Children)
             {
                 TraverseTreeAndAddElementsByName(child, list, elementName);
             }

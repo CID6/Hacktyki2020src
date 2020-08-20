@@ -96,7 +96,7 @@ namespace XMLExportDC
                 return 1011;
             }
 
-          
+
 
             try
             {
@@ -210,7 +210,7 @@ namespace XMLExportDC
 
             if (outputCSVLocation != null)
             {
-                outputCSVLocation = PrepareOutputPath(args[0], outputCSVLocation,"_output", "csv");
+                outputCSVLocation = PrepareOutputPath(args[0], outputCSVLocation, "_output", "csv");
 
                 Console.WriteLine("Option -c was given. CSV file will be saved at: {0}", outputCSVLocation);
             }
@@ -289,9 +289,9 @@ namespace XMLExportDC
             serializer.TurnAttributesIntoChildren(columnName);
             serializer.TurnValuesIntoChildren(columnName);
             serializer.Serialize(columnName);
-            if (outputPath!=null)
+            if (outputPath != null)
             {
-                serializer.Save(outputPath); 
+                serializer.Save(outputPath);
             }
 
             Stream stream = new MemoryStream();
@@ -305,7 +305,7 @@ namespace XMLExportDC
         {
             int i = 2;
             List<string> columnList = new List<string>();
-            while(i <= args.Length - 1 && args[i]!="-o" && args[i] != "-c" && args[i] != "-x")
+            while (i <= args.Length - 1 && args[i] != "-o" && args[i] != "-c" && args[i] != "-x")
             {
                 columnList.Add(args[i]);
                 i++;

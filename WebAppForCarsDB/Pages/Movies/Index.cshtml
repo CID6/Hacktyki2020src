@@ -10,57 +10,68 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
-<div class="table1">
-    <table class="table" id="mainTable">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Movie[0].Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Movie[0].ReleaseDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Movie[0].Genre)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Movie[0].Price)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody id="tablebody">
-            @foreach (var item in Model.Movie)
-            {
+<div class="row">
+    <div class="col-sm-10">
+        <table class="table" id="mainTable">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ReleaseDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Genre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    @*<td>
-                            <a asp-page="./Edit" asp-route-id="@item.FirebaseID">Edit</a> |
-                            <a asp-page="./Details" asp-route-id="@item.FirebaseID">Details</a> |
-                            <a asp-page="./Delete" asp-route-id="@item.FirebaseID">Delete</a>
-                        </td>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.Movie[0].Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Movie[0].ReleaseDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Movie[0].Genre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Movie[0].Price)
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody id="tablebody">
+                @foreach (var item in Model.Movie)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReleaseDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Genre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-2">
+        <form>
+            <input type="checkbox" id="horror" name="Horror" asp-for="Horror">
+            <label for="vehicle1"> Horror</label><br>
+            <input type="checkbox" id="action" name="Action" asp-for="Action">
+            <label for="vehicle2"> Action</label><br>
+            <input type="checkbox" id="comedy" name="Comedy" asp-for="Comedy">
+            <label for="vehicle3"> Comedy</label><br>
+            <input type="checkbox" id="scifi" name="Scifi" asp-for="Scifi">
+            <label for="vehicle3"> Science fiction</label><br>
+            <input type="checkbox" id="documentary" name="Documentary" asp-for="Documentary">
+            <label for="vehicle3"> Documentary</label><br>
+            <input type="submit" id="join-group" class="btn-outline-primary" value="Set groups" />
+        </form>
+    </div>
 </div>
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-database.js"></script>
 

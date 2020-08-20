@@ -11,51 +11,64 @@
     <a asp-page="Create">Create New</a>
 </p>
 
-<form>
-    <p>
-        Model: <input type="text" asp-for="SearchString" />
-        <input type="submit" value="Filter" />
-    </p>
-</form>
+<div class="row">
+    <div class="col-sm-10">
+        <table class="table" id="tablemain">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CarProducts[0].Year)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CarProducts[0].Vin)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CarProducts[0].CarModel)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CarProducts[0].Factory)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tablebody">
+                @foreach (var item in Model.CarProducts)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Year)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Vin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CarModel.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Factory.Name)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+        <div class="col-sm-2">
+            <form>
+                <input type="checkbox" id="astra" name="Astra" asp-for="Astra">
+                <label for="vehicle1"> Astra</label><br>
+                <input type="checkbox" id="vectra" name="Vectra" value="true" asp-for="Vectra">
+                <label for="vehicle2"> Vectra</label><br>
+                <input type="checkbox" id="almera" name="Almera" value="true" asp-for="Almera">
+                <label for="vehicle3"> Almera</label><br>
+                <input type="checkbox" id="cruze" name="Cruze" value="true" asp-for="Cruze">
+                <label for="vehicle3"> Cruze</label><br>
+                <input type="checkbox" id="epica" name="Epica" value="true" asp-for="Epica">
+                <label for="vehicle3"> Epica</label><br>
+                <input type="submit" id="join-group" class="btn-outline-primary" value="Set groups" />
+            </form>
+        </div>   
+</div>
 
-<table class="table" id="tablemain">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CarProducts[0].Year)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarProducts[0].Vin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarProducts[0].CarModel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarProducts[0].Factory)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody id="tablebody">
-        @foreach (var item in Model.CarProducts)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Year)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vin)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CarModel.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Factory.Name)
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/cars.js"></script>
 

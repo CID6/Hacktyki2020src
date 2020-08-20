@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EFCarsDB.Data;
+using EFCarsDB.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using EFCarsDB.Models;
-using EFCarsDB.Data;
-using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
 
 namespace WebAppForCarsDB.Pages.Cars
 {

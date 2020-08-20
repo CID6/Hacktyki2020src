@@ -1,9 +1,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using XMLExportDC;
-using System.Linq;
-using System.Collections.Generic;
-using System;
 
 namespace XMLExportTests
 {
@@ -144,7 +144,7 @@ namespace XMLExportTests
         [TestMethod]
         public void CheckArgsValidity_CorrectArgCount_Returns0()
         {
-            string[] threeArgs = { "inputPath", "Car" , "VIN"};
+            string[] threeArgs = { "inputPath", "Car", "VIN" };
 
             int threeArgsResult = Program.CheckArgsValidity(threeArgs);
 

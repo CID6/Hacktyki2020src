@@ -14,6 +14,7 @@ connection.on("UpdateCars", function (year, vin, modelname, factoryname) {
 
 connection.start().then(function () {
     console.log("connected! signalr");
+    SetGroups();
 });
 
 function dropTable() {
@@ -32,4 +33,43 @@ function createRow(year, vin, modelname, factoryname) {
     cell2.innerHTML = vin;
     cell3.innerHTML = modelname;
     cell4.innerHTML = factoryname;
+}
+
+function SetGroups() {
+    var astra = false;
+    var vectra = false;
+    var cruze = false;
+    var almera = false;
+    var epica = false;
+
+    var cars = [];
+
+    if (document.getElementById("astra").checked) cars.push("Astra");
+    if (document.getElementById("vectra").checked) cars.push("Vectra");
+    if (document.getElementById("cruze").checked) cars.push("Cruze");
+    if (document.getElementById("almera").checked) cars.push("Almera");
+    if (document.getElementById("epica").checked) cars.push("Epica");
+
+    for (var i = 0; i < cars.length; i++) {
+        try {
+            connection.invoke("JoinGroup", cars[i]);
+            console.log("user joined the group: " + cars[i]);
+        }
+        catch (e) {
+            console.error(e.toString());
+        }
+    }
+}
+
+function ResetGroups() {
+    var carNameArray = ["Astra", "Vectra", "Cruze", "Almera", "Epica"];
+
+    for (var i = 0; i < carNameArray.length; i++) {
+        try {
+            connection.invoke("LeaveGroup", carNameArray[i]);
+        }
+        catch (e) {
+            console.error(e.toString());
+        }
+    }
 }

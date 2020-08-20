@@ -1,12 +1,9 @@
-﻿using System;
+﻿using EFCarsDB.Areas.Identity.Data;
+using EFCarsDB.Data;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using EFCarsDB.Areas.Identity.Data;
-using EFCarsDB.Data;
 
 [assembly: HostingStartup(typeof(WebAppForCarsDB.Areas.Identity.IdentityHostingStartup))]
 namespace WebAppForCarsDB.Areas.Identity
@@ -15,7 +12,8 @@ namespace WebAppForCarsDB.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) => {
+            builder.ConfigureServices((context, services) =>
+            {
                 services.AddDbContext<WebAppForCarsDBContext>(options =>
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("UserContextConnection")));

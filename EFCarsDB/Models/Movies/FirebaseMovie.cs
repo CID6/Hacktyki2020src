@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace EFCarsDB.Models
 {
@@ -15,6 +13,6 @@ namespace EFCarsDB.Models
         public DateTime ReleaseDate { get; set; }
         public string Genre { get; set; }
 
-        public double Price { get; set; }
+        public string Price { get; set; }
     }
 }

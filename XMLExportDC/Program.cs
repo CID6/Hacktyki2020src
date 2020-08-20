@@ -132,6 +132,11 @@ namespace XMLExportDC
             return 0;
         }
 
+        /// <summary>
+        /// Creates output XML path based on passed command line arguments
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static string OutputXMLOption(string[] args)
         {
             string outputXMLLocation = null;
@@ -161,6 +166,11 @@ namespace XMLExportDC
 
         }
 
+        /// <summary>
+        /// Creates output XSL path based on passed command line arguments
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static string OutputXSLOption(string[] args)
         {
             string outputXSLLocation = null;
@@ -190,6 +200,11 @@ namespace XMLExportDC
 
         }
 
+        /// <summary>
+        /// Creates output CSV path based on passed command line arguments
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static string OutputCSVOption(string[] args)
         {
             string outputCSVLocation = null;
@@ -225,6 +240,12 @@ namespace XMLExportDC
 
         }
 
+        /// <summary>
+        /// Creates default output path, if one is not passed in command line arguments.
+        /// </summary>
+        /// <param name="inputPath"></param>
+        /// <param name="extension"></param>
+        /// <returns></returns>
         public static string CreateDefaultOutputPath(string inputPath, string extension)
         {
             string outputPath;
@@ -237,6 +258,14 @@ namespace XMLExportDC
             return outputPath;
         }
 
+        /// <summary>
+        /// Creates output path from given parameters.
+        /// </summary>
+        /// <param name="inputPath"></param>
+        /// <param name="outputPath"></param>
+        /// <param name="extraName"></param>
+        /// <param name="extension"></param>
+        /// <returns></returns>
         public static string PrepareOutputPath(string inputPath, string outputPath, string extraName, string extension)
         {
             string returnPath;
@@ -277,6 +306,13 @@ namespace XMLExportDC
             return returnPath;
         }
 
+        /// <summary>
+        /// Deserializes, then serializes again for the given column.
+        /// </summary>
+        /// <param name="inputPath"></param>
+        /// <param name="outputPath"></param>
+        /// <param name="columnName"></param>
+        /// <returns></returns>
         private static Stream TransposeXML(string inputPath, string outputPath, string columnName)
         {
             XDocument xml = XDocument.Load(inputPath);
@@ -301,6 +337,11 @@ namespace XMLExportDC
             return stream;
         }
 
+        /// <summary>
+        /// Parse columns from command line arguments
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static IEnumerable<string> ParseColumns(string[] args)
         {
             int i = 2;
@@ -314,6 +355,12 @@ namespace XMLExportDC
             return columnList;
         }
 
+        /// <summary>
+        /// Converts XML stream to CSV using XslCompiledTransform
+        /// </summary>
+        /// <param name="inputXMLStream"></param>
+        /// <param name="outputCSVpath"></param>
+        /// <param name="xslStream"></param>
         private static void TransformToCSV(Stream inputXMLStream, string outputCSVpath, Stream xslStream)
         {
 
@@ -327,7 +374,6 @@ namespace XMLExportDC
             xslt.Load(stylesheet: reader, settings: settings, stylesheetResolver: new XmlUrlResolver());
 
             XmlReader inputReader = XmlReader.Create(inputXMLStream);
-            Stream stream = new MemoryStream();
             xslt.Transform(input: inputReader, arguments: null, results: new FileStream(outputCSVpath, FileMode.Create, FileAccess.Write));
 
         }

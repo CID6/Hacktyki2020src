@@ -6,6 +6,9 @@ using System.Text;
 
 namespace RabbitProducer
 {
+    /// <summary>
+    /// Client for RPC conection
+    /// </summary>
     public class RpcClient
     {
         private readonly IConnection _connection;

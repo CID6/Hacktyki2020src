@@ -1,3 +1,9 @@
+## Projekty
+
+XMLExport - katalog XMLExportDC, XMLExportTests
+Kolejka RabbitMQ - katalog RabbitProducer, RabbitEntityConsumer, EFCarsDB
+SignalR vs Firebase - WebAppForCarsDB, EFCarsDB
+
 # XMLExport
 
 

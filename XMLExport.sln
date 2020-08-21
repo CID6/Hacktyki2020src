@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLExportTests", "XMLExport
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4F906A57-D6DA-4B8E-959A-06DBA194BF06}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\..\CarsDB.mdf = ..\..\..\CarsDB.mdf
 		timesheet.xlsx = timesheet.xlsx
+		..\..\..\WebAppForCarsDB.mdf = ..\..\..\WebAppForCarsDB.mdf
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLExportDC", "XMLExportDC\XMLExportDC.csproj", "{964116C1-DAD1-4B64-A0DE-D3E7AC8D82AD}"

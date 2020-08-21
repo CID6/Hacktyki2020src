@@ -2,9 +2,9 @@
 
 XMLExport - katalog XMLExportDC, XMLExportTests
 
-Kolejka RabbitMQ - katalog RabbitProducer, RabbitEntityConsumer, EFCarsDB
+Kolejka RabbitMQ - katalog RabbitProducer, RabbitEntityConsumer, EFCarsDB, Lokalna baza danych/CarsDB.bak
 
-SignalR vs Firebase - WebAppForCarsDB, EFCarsDB
+SignalR vs Firebase - WebAppForCarsDB, EFCarsDB, Lokalna baza danych/WebAppForCarsDB.bak, Lokalna baza danych/CarsDB.bak, signalrquery.sql
 
 
 # XMLExport
